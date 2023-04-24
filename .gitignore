@@ -8,6 +8,7 @@
 # Build directories
 /target/
 /build/
+/out/
 
 # IDE-specific files
 .idea/
