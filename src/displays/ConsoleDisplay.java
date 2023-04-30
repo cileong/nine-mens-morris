@@ -1,3 +1,7 @@
+package src.displays;
+
+import src.Game;
+
 import java.util.Arrays;
 
 public class ConsoleDisplay extends Display {
@@ -37,7 +41,7 @@ public class ConsoleDisplay extends Display {
             System.out.println("");
         }
 
-//        Board = game.getBoard();
+//        src.Board = game.getBoard();
 //        Position position;
 //        for (int y=0; y<3; y++) {
 //            for (int x=0; x<3; x++) {
