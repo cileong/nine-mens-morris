@@ -1,3 +1,7 @@
+package src.phases;
+
+import src.Board;
+
 public abstract class PlayerPhase {
 
     protected Board board;

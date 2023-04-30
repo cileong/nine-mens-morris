@@ -1,3 +1,7 @@
+package src.displays;
+
+import src.Game;
+
 public abstract class Display {
 
     protected Game game;

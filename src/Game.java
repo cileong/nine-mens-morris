@@ -1,11 +1,19 @@
+package src;
+
+import src.displays.Display;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
 
-    private final List<Display> displays;
+    private Board board;
+    private List<Move> moves;
+    private List<Display> displays;
 
     public Game() {
+        board = new Board();
+        moves = new ArrayList<>();
         displays = new ArrayList<>();
     }
 

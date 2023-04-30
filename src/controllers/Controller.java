@@ -1,3 +1,8 @@
+package src.controllers;
+
+import src.Game;
+import src.displays.Display;
+
 public abstract class Controller {
 
     protected Game game;

@@ -1,4 +1,9 @@
-import java.util.Arrays;
+package src;
+
+import src.controllers.ConsoleController;
+import src.controllers.Controller;
+import src.displays.ConsoleDisplay;
+import src.displays.Display;
 
 public class Main {
 
@@ -11,8 +16,6 @@ public class Main {
         game.addDisplay(display);
 
         game.run();
-
-        display.update();
     }
 
 }
