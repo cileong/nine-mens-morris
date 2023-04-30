@@ -1,4 +1,4 @@
-package Nine_Mans_Morris_Code;
+package edu.monash;
 
 public class Menu {
     public String showMenu(Player player, Move moves, Display display){

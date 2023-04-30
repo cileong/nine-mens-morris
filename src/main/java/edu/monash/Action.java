@@ -1,4 +1,4 @@
-package Nine_Mans_Morris_Code;
+package edu.monash;
 
 public abstract class Action {
     private Game game;
