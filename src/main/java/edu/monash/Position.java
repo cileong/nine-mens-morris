@@ -1,20 +1,76 @@
 package edu.monash;
 
 public class Position {
-    private int xCoordinate;
-    private int yCoordinate;
+    private static int idCounter = 0;
+    private final int id;
+    private Position neighbourUp, neighbourDown, neighbourLeft, neighbourRight;
+    private Piece occupiedBy;
 
-    public Boolean containsAPiece() {
-        return false;
+    public Position() {
+        this.id = idCounter++;
     }
-    public Boolean hasNeighbours(){
-        return false;
+
+    public int getId() {
+        return id;
     }
-    public Boolean getPiece(){
-        return false;
+
+    public Position withUpNeighbour(Position neighbourUp) {
+        this.neighbourUp = neighbourUp;
+        return this;
     }
-    public Boolean canPieceBePlaced(){
-        return false;
+
+    public Position withDownNeighbour(Position neighbourDown) {
+        this.neighbourDown = neighbourDown;
+        return this;
+    }
+
+    public Position withLeftNeighbour(Position neighbourLeft) {
+        this.neighbourLeft = neighbourLeft;
+        return this;
+    }
+
+    public Position withRightNeighbour(Position neighbourRight) {
+        this.neighbourRight = neighbourRight;
+        return this;
+    }
+
+    public boolean canPieceBePlaced() {
+        return occupiedBy == null;
+    }
+
+    public boolean canPieceBeRemoved() {
+        return occupiedBy != null &&
+                !isInHorizontalMill() &&
+                !isInVerticalMill();
+    }
+
+    public boolean isInHorizontalMill() {
+        if (isHorizontalAnchor()) {
+            return neighbourLeft.occupiedBy == occupiedBy &&
+                    neighbourRight.occupiedBy == occupiedBy;
+        } else {
+            return (neighbourLeft != null && neighbourLeft.isInHorizontalMill()) ||
+                    neighbourRight.isInHorizontalMill();
+        }
+    }
+
+    public boolean isInVerticalMill() {
+        if (isVerticalAnchor()) {
+            return neighbourUp.occupiedBy == occupiedBy &&
+                    neighbourDown.occupiedBy == occupiedBy;
+        } else {
+            assert neighbourUp != null || neighbourDown != null;
+            return (neighbourUp != null && neighbourUp.isInVerticalMill()) ||
+                    neighbourDown.isInVerticalMill();
+        }
+    }
+
+    private boolean isHorizontalAnchor() {
+        return neighbourLeft != null && neighbourRight != null;
+    }
+
+    private boolean isVerticalAnchor() {
+        return neighbourUp != null && neighbourDown != null;
     }
 
 }
