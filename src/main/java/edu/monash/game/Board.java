@@ -13,13 +13,10 @@ public class Board {
     private static final int NUM_POSITIONS_PER_RING = 8;
 
     List<Position> positions;
-    PlayerPhase p1Phase, p2Phase;
+
 
     public Board() {
         positions = createBoardStructure();
-
-        p1Phase = new PlacePhase(this);
-        p2Phase = new PlacePhase(this);
     }
 
     public static Board getInstance() {
