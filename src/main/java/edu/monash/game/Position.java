@@ -1,4 +1,4 @@
-package edu.monash;
+package edu.monash.game;
 
 public class Position {
     private static int idCounter = 0;

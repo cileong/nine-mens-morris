@@ -1,4 +1,4 @@
-package edu.monash;
+package edu.monash.game;
 
 public abstract class Action {
     private Game game;

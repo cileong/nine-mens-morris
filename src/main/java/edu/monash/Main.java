@@ -1,22 +1,17 @@
 package edu.monash;
 
 import java.io.IOException;
-import java.net.URL;
 
-import edu.monash.controller.GUIController;
+import edu.monash.game.Game;
 import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class Main extends Application {
 
@@ -24,13 +19,6 @@ public class Main extends Application {
     private Game game;
     @Override
     public void start(Stage stage) {
-//        String javaVersion = System.getProperty("java.version");
-//        String javafxVersion = System.getProperty("javafx.version");
-//        Label l = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-//        Scene scene = new Scene(new StackPane(l), 640, 480);
-//        stage.setScene(scene);
-//        stage.show();
-
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getClassLoader().getResource("edu/monash/GUI.fxml"));
@@ -43,7 +31,7 @@ public class Main extends Application {
 
             Platform.setImplicitExit(false);
             stage.setOnCloseRequest(event -> { // WindowEvent
-                guiController.handleClose();
+                guiController.quitGame();
                 event.consume();
             });
 
@@ -59,10 +47,25 @@ public class Main extends Application {
             e.printStackTrace();
         }
 
+//        try {
+//            ClassLoader classLoader = getClass().getClassLoader();
+//
+//            FXMLLoader fxmlLoader = new FXMLLoader();
+//            fxmlLoader.setLocation(classLoader.getResource("edu/monash/GUI.fxml"));
+//            Parent root = fxmlLoader.load();
+//
+//
+//
+//            stage.setTitle("Nine Men's Morris");
+//            stage.setScene(new Scene(root));
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
 }

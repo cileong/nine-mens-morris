@@ -1,4 +1,4 @@
-package edu.monash;
+package edu.monash.game;
 
 public class JumpPhase implements PlayerPhase {
 

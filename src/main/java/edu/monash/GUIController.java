@@ -1,6 +1,6 @@
-package edu.monash.controller;
-import edu.monash.Board;
-import edu.monash.Game;
+package edu.monash;
+import edu.monash.game.Board;
+import edu.monash.game.Game;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,7 +46,7 @@ public class GUIController {
     }
 
     @FXML
-    public void handleClose() {
+    public void quitGame() {
         enableBlur();
         promptDialogAndRestartGame("NINE MEN MORRIS", "Quit Game?", "Quit game?", 1);
         disableBlur();

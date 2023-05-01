@@ -1,4 +1,4 @@
-package edu.monash;
+package edu.monash.game;
 
 import java.util.ArrayList;
 

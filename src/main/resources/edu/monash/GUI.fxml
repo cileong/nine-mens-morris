@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="540.0" prefWidth="620.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.monash.controller.GUIController">
+<VBox prefHeight="540.0" prefWidth="620.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.monash.GUIController">
     <children>
         <MenuBar prefHeight="20.0">
             <menus>
@@ -25,7 +25,7 @@
                                 <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                             </accelerator>
                         </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#handleClose" text="Close" />
+                        <MenuItem mnemonicParsing="false" onAction="#quitGame" text="Close" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -112,7 +112,7 @@
                       <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
                   </children>
               </GridPane>
-                <Separator orientation="VERTICAL" prefHeight="633.0" prefWidth="0.0" />
+                <Separator orientation="VERTICAL" prefHeight="200.0" />
                 <GridPane id="right-tile-grid" fx:id="rightTileGrid" prefHeight="500.0" prefWidth="60.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
