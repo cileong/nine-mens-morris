@@ -16,7 +16,7 @@ public class Main extends Application {
             ClassLoader classLoader = getClass().getClassLoader();
 
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(classLoader.getResource("edu/monash/fxml/gui.fxml"));
+            fxmlLoader.setLocation(classLoader.getResource("edu/monash/fxml/main.fxml"));
             Parent root = fxmlLoader.load();
 
             stage.setScene(new Scene(root));
