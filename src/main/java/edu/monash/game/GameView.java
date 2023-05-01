@@ -9,7 +9,7 @@ public class GameView {
 
     public GameView() {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/edu/monash/game/GUI.fxml"));
+        loader.setLocation(getClass().getResource("/edu/monash/game/gui.fxml"));
 
         stage = new Stage();
     }

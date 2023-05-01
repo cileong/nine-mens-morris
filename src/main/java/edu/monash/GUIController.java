@@ -1,6 +1,5 @@
 package edu.monash;
-import edu.monash.game.Board;
-import edu.monash.game.Game;
+
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,9 +19,8 @@ public class GUIController {
 
     private ObservableList<ImageView> boardGridChildren = FXCollections.observableArrayList();
 
+    @FXML
     private Stage stage;
-    private Board board;
-    private Game game;
     @FXML
     private GridPane boardGrid;
     @FXML
@@ -32,10 +30,6 @@ public class GUIController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
     }
 
     @FXML
@@ -86,7 +80,6 @@ public class GUIController {
         disableBlur();
     }
 
-
     private void showInvalidMoveDialog(String contentText) {
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Warning");
@@ -109,8 +102,6 @@ public class GUIController {
 
     @FXML
     private void initialize() {
-        board = Board.getInstance();
-
         for (Node i : boardGrid.getChildren()) {
             boardGridChildren.add((ImageView) i);
         }
