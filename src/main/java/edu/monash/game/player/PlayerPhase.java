@@ -1,4 +1,4 @@
-package edu.monash.game;
+package edu.monash.game.player;
 
 public interface PlayerPhase {
 

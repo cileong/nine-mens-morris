@@ -8,22 +8,13 @@ import java.util.stream.IntStream;
 
 public class Board {
 
-    private static Board instance = new Board();
     private static final int NUM_RINGS = 3;
     private static final int NUM_POSITIONS_PER_RING = 8;
 
     List<Position> positions;
-    PlayerPhase p1Phase, p2Phase;
 
     public Board() {
         positions = createBoardStructure();
-
-        p1Phase = new PlacePhase(this);
-        p2Phase = new PlacePhase(this);
-    }
-
-    public static Board getInstance() {
-        return instance;
     }
 
     private List<Position> createBoardStructure() {

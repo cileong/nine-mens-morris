@@ -1,0 +1,11 @@
+#board-grid {
+    -fx-background-image: url("../images/board.png");
+}
+
+#left-tile-grid > .image-view {
+    -fx-image: url("../images/piece-black.png");
+}
+
+#right-tile-grid > .image-view {
+    -fx-image: url("../images/piece-white.png");
+}
