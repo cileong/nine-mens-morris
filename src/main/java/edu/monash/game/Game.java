@@ -21,9 +21,12 @@ public class Game {
         return board;
     }
 
-    public void execute(Action action) {
-        if (action.isValid(this, currentPlayer))
+    public boolean execute(Action action) {
+        if (action.isValid(this, currentPlayer)) {
             action.executeOn(this);
+            return true;
+        }
+        return false;
     }
 
     public void storePlayedMove(Move move) {

@@ -17,9 +17,9 @@ public class MoveAction implements Action {
     @Override
     public boolean isValid(Game game, Player player) {
         Board board = game.getBoard();
-        Position fromPosition = board.getPosition(move.getFrom());
-        Position toPosition = board.getPosition(move.getTo());
-        return fromPosition.canPieceBeMoved(player) && toPosition.canPieceBePlaced();
+        Position source = board.getPosition(move.getFrom());
+        Position destination = board.getPosition(move.getTo());
+        return source.canPieceBeMoved(player) && destination.canPieceBePlaced();
     }
 
     @Override
