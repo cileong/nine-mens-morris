@@ -33,8 +33,8 @@ public class Game {
     public void initializeNewGame() {
         board = new Board();
 
-        player1 = new Player(Piece.BLACK, new PlacePhase(player1));
-        player2 = new Player(Piece.WHITE, new PlacePhase(player2));
+        player1 = new Player(Piece.BLACK, PlacePhase::new);
+        player2 = new Player(Piece.WHITE, PlacePhase::new);
         currentPlayer = player1;
 
         movesPlayed = new Stack<>();

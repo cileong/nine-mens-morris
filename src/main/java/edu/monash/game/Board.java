@@ -40,7 +40,10 @@ public class Board {
     }
 
     public Position getPosition(int id) {
-        return positions.get(id);
+        return positions.stream()
+                .filter(position -> position.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     private int previousOfY(int y) {

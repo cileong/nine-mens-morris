@@ -19,7 +19,7 @@ public class MoveAction implements Action {
         Board board = game.getBoard();
         Position fromPosition = board.getPosition(move.getFrom());
         Position toPosition = board.getPosition(move.getTo());
-        return fromPosition.canPieceBeRemoved(player) && toPosition.canPieceBePlaced();
+        return fromPosition.canPieceBeMoved(player) && toPosition.canPieceBePlaced();
     }
 
     @Override

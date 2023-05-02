@@ -1,6 +1,7 @@
 package edu.monash.game;
 
 import edu.monash.game.player.Player;
+import edu.monash.game.player.PlayerPhase;
 
 public class Position {
     private static int idCounter = 0;
@@ -40,13 +41,14 @@ public class Position {
         return occupiedBy == null;
     }
 
+    public boolean canPieceBeMoved(Player player) {
+        return occupiedBy == player.getPieceColour();
+    }
+
     public boolean canPieceBeRemoved(Player player) {
-        if (occupiedBy == player.getPieceColour())
-            return true;
-        else
-            return occupiedBy != null &&
-                    !isInHorizontalMill() &&
-                    !isInVerticalMill();
+        return occupiedBy != null &&
+                !isInHorizontalMill() &&
+                !isInVerticalMill();
     }
 
     public Piece getPiece() {

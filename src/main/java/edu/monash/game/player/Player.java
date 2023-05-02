@@ -2,15 +2,17 @@ package edu.monash.game.player;
 
 import edu.monash.game.Piece;
 
+import java.util.function.Function;
+
 public class Player {
 
     private final Piece pieceColour;
 
     private PlayerPhase phase;
 
-    public Player(Piece pieceColour, PlayerPhase initialPhase) {
+    public Player(Piece pieceColour, Function<Player, PlayerPhase> initialPhaseConstructor) {
         this.pieceColour = pieceColour;
-        this.phase = initialPhase;
+        this.phase = initialPhaseConstructor.apply(this);
     }
 
     public Piece getPieceColour() {
@@ -21,8 +23,8 @@ public class Player {
         return phase;
     }
 
-    public void setPhase(PlayerPhase phase) {
-        this.phase = phase;
+    public void setPhase(Function<Player, PlayerPhase> phaseConstructor) {
+        phase = phaseConstructor.apply(this);
     }
 
 }
