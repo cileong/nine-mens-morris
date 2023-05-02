@@ -47,21 +47,21 @@ public class Board {
     }
 
     private int previousOfY(int y) {
-        int index = (y - 1) % NUM_POSITIONS_PER_RING;
-        return toPositiveIndex(index, NUM_POSITIONS_PER_RING);
-    }
-
-    private int nextOfY(int y) {
-        return (y + 1) % NUM_POSITIONS_PER_RING;
-    }
-
-    private int previousOfX(int x) {
-        int index = (x - 1) % NUM_RINGS;
+        int index = (y - 1) % NUM_RINGS;
         return toPositiveIndex(index, NUM_RINGS);
     }
 
+    private int nextOfY(int y) {
+        return (y + 1) % NUM_RINGS;
+    }
+
+    private int previousOfX(int x) {
+        int index = (x - 1) % NUM_POSITIONS_PER_RING;
+        return toPositiveIndex(index, NUM_POSITIONS_PER_RING);
+    }
+
     private int nextOfX(int x) {
-        return (x + 1) % NUM_RINGS;
+        return (x + 1) % NUM_POSITIONS_PER_RING;
     }
 
     private int toPositiveIndex(int index, int length) {

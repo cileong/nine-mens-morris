@@ -43,6 +43,10 @@ public class Game {
         movesPlayed = new Stack<>();
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     public void switchPlayer() {
         currentPlayer = currentPlayer.equals(player1) ? player2 : player1;
         turnCount++;

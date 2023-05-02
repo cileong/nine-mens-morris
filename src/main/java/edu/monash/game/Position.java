@@ -41,7 +41,8 @@ public class Position {
     }
 
     public boolean canPieceBeMoved(Player player) {
-        return occupiedBy == player.getPieceColour();
+//        return occupiedBy == player.getPieceColour();
+        return true;
     }
 
     public boolean canPieceBeRemoved(Player player) {

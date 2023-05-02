@@ -1,6 +1,9 @@
 package edu.monash;
 
 import edu.monash.game.Game;
+import edu.monash.game.actions.Action;
+import edu.monash.game.actions.MoveAction;
+import edu.monash.game.player.Player;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,16 +13,18 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.util.Optional;
 
 public class ViewController {
+
+    private static final DataFormat GRID_PANE_CELL_FORMAT =
+            new DataFormat("application/x-gridpane-cell");
 
     private Game game;
 
@@ -45,14 +50,14 @@ public class ViewController {
     @FXML
     private void newGame() {
         enableBlur();
-        showPromptDialog("New Game", null, "Start a new game?", 0);
+//        showPromptDialog("New Game", null, "Start a new game?", 0);
         disableBlur();
     }
 
     @FXML
     public void quitGame() {
         enableBlur();
-        showPromptDialog("NINE MEN MORRIS", "Quit Game?", "Quit game?", 1);
+//        showPromptDialog("NINE MEN MORRIS", "Quit Game?", "Quit game?", 1);
         disableBlur();
     }
 
@@ -94,37 +99,97 @@ public class ViewController {
         return boardMapping[y][x];
     }
 
-    private void initDrag(GridPane grid) {
-        for (Node i : grid.getChildren()) {
-            ImageView imageView = (ImageView) i;
-
-            imageView.setOnDragDetected(event -> { // MouseEvent
-                if (imageView.getImage() == null) {
-                    return;
-                }
-                    game.getBoard().setAllowDropLocations(getLocationOfTile(imageView));
-
-                    Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
-                    ClipboardContent content = new ClipboardContent();
-                    content.putImage(imageView.getImage());
-                    content.putString(imageView.getId());
-                    db.setContent(content);
-
-                event.consume();
-            });
-
-            imageView.setOnDragDone(event -> { // DragEvent
-                if (event.getTransferMode() == TransferMode.MOVE) {
-                    imageView.setImage(null);
-                    if (grid.getId().equals(boardGrid.getId())) {
-                        imageView.setId(null);
-                    }
-                }
-                event.consume();
-                resetAllowedDropLocationImages();
-            });
+    private void setupDragAndDrop(GridPane gridPane) {
+        for (Node child : gridPane.getChildren()) {
+            child.setOnDragDetected(event -> onDragDetectedHandler(child, event));
+            child.setOnDragOver(event -> onDragOverHandler(child, event));
+            child.setOnDragDropped(event -> onDragDroppedHandler(child, event));
         }
     }
+
+    private void onDragDetectedHandler(Node child, MouseEvent event) {
+        int sourceX = GridPane.getColumnIndex(child),
+            sourceY = GridPane.getRowIndex(child);
+        System.out.println(sourceX + " " + sourceY);
+
+        Dragboard dragboard = child.startDragAndDrop(TransferMode.MOVE);
+        ClipboardContent content = new ClipboardContent();
+
+        content.put(GRID_PANE_CELL_FORMAT, new int[] { sourceX, sourceY });
+        dragboard.setContent(content);
+
+        event.consume();
+    }
+
+    private void onDragOverHandler(Node child, DragEvent event) {
+        if (event.getGestureSource() != child &&
+                event.getDragboard().hasContent(GRID_PANE_CELL_FORMAT))
+            event.acceptTransferModes(TransferMode.MOVE);
+
+        event.consume();
+    }
+
+    private void onDragDroppedHandler(Node child, DragEvent event) {
+        Dragboard dragboard = event.getDragboard();
+        boolean success = dragboard.hasContent(GRID_PANE_CELL_FORMAT);
+
+        if (success) {
+            int[] sourceIndices = (int[]) dragboard.getContent(GRID_PANE_CELL_FORMAT);
+            int sourceX = sourceIndices[0];
+            int sourceY = sourceIndices[1];
+
+            int destinationX = GridPane.getColumnIndex(child);
+            int destinationY = GridPane.getRowIndex(child);
+
+            System.out.println("Source GridPane indices: (" + sourceX + ", " + sourceY + ")");
+            System.out.println("Destination GridPane indices: (" + destinationX + ", " + destinationY + ")");
+            System.out.println(boardMapping[destinationY][destinationX]);
+        }
+
+        event.setDropCompleted(success);
+        event.consume();
+    }
+
+//    private void initDrag(GridPane grid) {
+//        for (Node i : grid.getChildren()) {
+//            ImageView imageView = (ImageView) i;
+//
+//            imageView.setOnDragDetected(event -> {
+//                if (imageView.getImage() == null) {
+//                    return;
+//                }
+//
+//                Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+//                ClipboardContent content = new ClipboardContent();
+//                content.putImage(imageView.getImage());
+//                content.putString(imageView.getId());
+//                db.setContent(content);
+//
+//                event.consume();
+//            });
+//
+//            imageView.setOnDragDone(event -> {
+//                if (event.getTransferMode() == TransferMode.MOVE) {
+//                    imageView.setImage(null);
+//                    if (grid.getId().equals(boardGrid.getId())) {
+//                        imageView.setId(null);
+//                    }
+//                }
+//
+//                Player currentPlayer = game.getCurrentPlayer();
+//                Integer fromId = 0;
+//                Integer toId = 0;
+//                Action action = new MoveAction(currentPlayer, fromId, toId);
+//
+//                boolean success = game.execute(action);
+//                if (success)
+//                    imageView.setImage(new Image());
+//
+//                event.consume();
+////                resetAllowedDropLocationImages();
+//            });
+//        }
+//    }
 
     private void enableBlur() {
         stage.getScene().getRoot().setEffect(new GaussianBlur(4));
@@ -136,15 +201,8 @@ public class ViewController {
 
     @FXML
     private void initialize() {
-        for (Node i : boardGrid.getChildren()) {
-            boardGridChildren.add((ImageView) i);
-        }
-
-//        initDrag(leftTileGrid);
-//        initDrag(rightTileGrid);
-//        initDrag(boardGrid);
-//        initDrop(boardGrid);
-
+        setupDragAndDrop(boardGrid);
+        System.out.println("HELLO WORLD");
     }
 
 
