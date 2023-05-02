@@ -11,7 +11,7 @@ public class UndoAction implements Action {
     }
 
     @Override
-    public void execute(Game game) {
+    public void executeOn(Game game) {
 
     }
 

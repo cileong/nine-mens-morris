@@ -11,7 +11,7 @@ public class Board {
     private static final int NUM_RINGS = 3;
     private static final int NUM_POSITIONS_PER_RING = 8;
 
-    List<Position> positions;
+    private final List<Position> positions;
 
     public Board() {
         positions = createBoardStructure();
@@ -19,24 +19,28 @@ public class Board {
 
     private List<Position> createBoardStructure() {
         Position[][] rings = IntStream.range(0, NUM_RINGS)
-                .mapToObj(x -> IntStream.range(0, NUM_POSITIONS_PER_RING)
-                        .mapToObj(y -> new Position())
+                .mapToObj(y -> IntStream.range(0, NUM_POSITIONS_PER_RING)
+                        .mapToObj(x -> new Position())
                         .toArray(Position[]::new))
                 .toArray(Position[][]::new);
 
-        for (int x = 0; x < NUM_RINGS; x++) {
-            for (int y = 0; y < NUM_POSITIONS_PER_RING; y++) {
-                rings[x][y] = rings[x][y]
-                        .withLeftNeighbour(rings[x][previousOfY(y)])
-                        .withRightNeighbour(rings[x][nextOfY(y)])
-                        .withUpNeighbour(y % 2 == 1 ? rings[previousOfX(x)][y] : null)
-                        .withDownNeighbour(y % 2 == 1 ? rings[nextOfX(x)][y] : null);
+        for (int y = 0; y < NUM_RINGS; y++) {
+            for (int x = 0; x < NUM_POSITIONS_PER_RING; x++) {
+                rings[y][x] = rings[y][x]
+                        .withLeftNeighbour(rings[y][previousOfX(x)])
+                        .withRightNeighbour(rings[y][nextOfX(x)])
+                        .withUpNeighbour(x % 2 == 1 ? rings[previousOfY(y)][x] : null)
+                        .withDownNeighbour(x % 2 == 1 ? rings[nextOfY(y)][x] : null);
             }
         }
 
         return Arrays.stream(rings)
                 .flatMap(Arrays::stream)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public Position getPosition(int id) {
+        return positions.get(id);
     }
 
     private int previousOfY(int y) {

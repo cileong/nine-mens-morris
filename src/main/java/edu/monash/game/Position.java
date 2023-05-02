@@ -1,5 +1,7 @@
 package edu.monash.game;
 
+import edu.monash.game.player.Player;
+
 public class Position {
     private static int idCounter = 0;
     private final int id;
@@ -38,10 +40,21 @@ public class Position {
         return occupiedBy == null;
     }
 
-    public boolean canPieceBeRemoved() {
-        return occupiedBy != null &&
-                !isInHorizontalMill() &&
-                !isInVerticalMill();
+    public boolean canPieceBeRemoved(Player player) {
+        if (occupiedBy == player.getPieceColour())
+            return true;
+        else
+            return occupiedBy != null &&
+                    !isInHorizontalMill() &&
+                    !isInVerticalMill();
+    }
+
+    public Piece getPiece() {
+        return occupiedBy;
+    }
+
+    public void setPiece(Piece piece) {
+        occupiedBy = piece;
     }
 
     public boolean isInHorizontalMill() {

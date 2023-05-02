@@ -7,6 +7,6 @@ public interface Action {
 
     boolean isValid(Game game, Player player);
 
-    void execute(Game game);
+    void executeOn(Game game);
 
 }

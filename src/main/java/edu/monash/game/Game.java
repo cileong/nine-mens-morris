@@ -21,9 +21,9 @@ public class Game {
         return board;
     }
 
-    public void executeAction(Action action) {
+    public void execute(Action action) {
         if (action.isValid(this, currentPlayer))
-            action.execute(this);
+            action.executeOn(this);
     }
 
     public void storePlayedMove(Move move) {
@@ -31,22 +31,17 @@ public class Game {
     }
 
     public void initializeNewGame() {
-        // Initialize board.
         board = new Board();
 
-        // Initialize players.
-        player1 = new Player();
-        player2 = new Player();
-        player1.setPhase(new PlacePhase(player1));
-        player2.setPhase(new PlacePhase(player2));
+        player1 = new Player(Piece.BLACK, new PlacePhase(player1));
+        player2 = new Player(Piece.WHITE, new PlacePhase(player2));
         currentPlayer = player1;
 
-        // Host a stack for storing the moves played.
         movesPlayed = new Stack<>();
     }
 
     public void switchPlayer() {
-        currentPlayer = (currentPlayer == player1) ? player2 : player1;
+        currentPlayer = currentPlayer.equals(player1) ? player2 : player1;
         turnCount++;
     }
 

@@ -23,6 +23,7 @@ public class ViewController {
     public Integer getPositionId(int x, int y) {
         assert x >= 0 && x < boardMapping.length;
         assert y >= 0 && y < boardMapping[0].length;
+        assert boardMapping[y][x] != null;
         return boardMapping[y][x];
     }
 
