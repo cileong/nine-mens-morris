@@ -150,43 +150,82 @@ public class ViewController {
         event.consume();
     }
 
-//    private void initDrag(GridPane grid) {
+    private void initDrag(GridPane grid) {
+        for (Node i : grid.getChildren()) {
+            if (!(i instanceof ImageView imageView))
+                continue;
+
+            imageView.setOnDragDetected(event -> {
+                if (imageView.getImage() == null) {
+                    return;
+                }
+
+                Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
+                ClipboardContent content = new ClipboardContent();
+                content.putImage(imageView.getImage());
+                content.putString(imageView.getId());
+                db.setContent(content);
+
+                event.consume();
+            });
+
+            imageView.setOnDragDone(event -> {
+                if (event.getTransferMode() == TransferMode.MOVE) {
+                    imageView.setImage(null);
+                    if (grid.getId().equals(boardGrid.getId())) {
+                        imageView.setId(null);
+                    }
+                }
+
+                event.consume();
+            });
+
+            imageView.setOnDragOver(event -> { // DragEvent
+
+                Dragboard db = event.getDragboard();
+                if (event.getGestureSource() != imageView && db.hasImage() && db.hasString() && imageView.getId() == null) {
+                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                }
+                event.consume();
+            });
+
+            imageView.setOnDragDropped(event -> { // DragEvent
+                Dragboard db = event.getDragboard();
+                if (db.hasImage() && db.hasString()) {
+
+                    imageView.setImage(db.getImage());
+                    imageView.setId(db.getString());
+//                            game.getBoard().setPlacedTileLocation(dropLocation);
+                    event.setDropCompleted(true);
+                }
+                event.consume();
+            });
+        }
+    }
+
+//    private void initDrop(GridPane grid) {
 //        for (Node i : grid.getChildren()) {
-//            ImageView imageView = (ImageView) i;
+//            System.out.println(i);
+//            ImageView iv = (ImageView) i;
 //
-//            imageView.setOnDragDetected(event -> {
-//                if (imageView.getImage() == null) {
-//                    return;
+//            iv.setOnDragOver(event -> { // DragEvent
+//                Dragboard db = event.getDragboard();
+//                if (event.getGestureSource() != iv && db.hasImage() && db.hasString() && iv.getId() == null) {
+//                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
 //                }
-//
-//                Dragboard db = imageView.startDragAndDrop(TransferMode.ANY);
-//                ClipboardContent content = new ClipboardContent();
-//                content.putImage(imageView.getImage());
-//                content.putString(imageView.getId());
-//                db.setContent(content);
-//
 //                event.consume();
 //            });
 //
-//            imageView.setOnDragDone(event -> {
-//                if (event.getTransferMode() == TransferMode.MOVE) {
-//                    imageView.setImage(null);
-//                    if (grid.getId().equals(boardGrid.getId())) {
-//                        imageView.setId(null);
-//                    }
+//            iv.setOnDragDropped(event -> { // DragEvent
+//                Dragboard db = event.getDragboard();
+//                if (db.hasImage() && db.hasString()) {
+//
+//                            iv.setImage(db.getImage());
+//                            iv.setId(db.getString());
+////                            game.getBoard().setPlacedTileLocation(dropLocation);
+//                            event.setDropCompleted(true);
 //                }
-//
-//                Player currentPlayer = game.getCurrentPlayer();
-//                Integer fromId = 0;
-//                Integer toId = 0;
-//                Action action = new MoveAction(currentPlayer, fromId, toId);
-//
-//                boolean success = game.execute(action);
-//                if (success)
-//                    imageView.setImage(new Image());
-//
 //                event.consume();
-////                resetAllowedDropLocationImages();
 //            });
 //        }
 //    }
@@ -201,7 +240,18 @@ public class ViewController {
 
     @FXML
     private void initialize() {
-        setupDragAndDrop(boardGrid);
+//        setupDragAndDrop(boardGrid);
+
+
+//        for (Node child : blackGrid.getChildren()) {
+//            child.setOnDragDetected(event -> onDragDetectedHandler(child, event));
+//            child.setOnDragOver(event -> onDragOverHandler(child, event));
+//        }
+
+        initDrag(blackGrid);
+        initDrag(whiteGrid);
+        initDrag(boardGrid);
+//        initDrop(boardGrid);
         System.out.println("HELLO WORLD");
     }
 
