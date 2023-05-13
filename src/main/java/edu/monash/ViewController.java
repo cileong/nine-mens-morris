@@ -195,7 +195,6 @@ public class ViewController {
 
                     imageView.setImage(db.getImage());
                     imageView.setId(db.getString());
-//                            game.getBoard().setPlacedTileLocation(dropLocation);
                     event.setDropCompleted(true);
                 }
                 event.consume();
