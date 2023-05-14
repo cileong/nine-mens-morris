@@ -7,4 +7,6 @@ public interface PlayerPhase {
 
     boolean validate(Board board, Move move);
 
+    void transition();
+
 }

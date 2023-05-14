@@ -15,4 +15,10 @@ public class JumpPhase implements PlayerPhase {
         return false;
     }
 
+    @Override
+    public void transition() {
+        if (player.getPiecesOnBoard() < 3)
+            player.setPhase(unused -> null);
+    }
+
 }

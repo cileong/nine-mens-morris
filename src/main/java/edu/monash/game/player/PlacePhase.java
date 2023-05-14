@@ -13,7 +13,14 @@ public class PlacePhase implements PlayerPhase {
 
     @Override
     public boolean validate(Board board, Move move) {
-        return false;
+        // Only accept moves with no source.
+        return move.getFrom() == null && move.getTo() != null;
+    }
+
+    @Override
+    public void transition() {
+        if (player.getPiecesOnHand() <= 0)
+            player.setPhase(SlidePhase::new);
     }
 
 }

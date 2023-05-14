@@ -20,8 +20,8 @@ public class Move {
     }
 
     public void executeOn(Board board) {
-        Position fromPosition = from != null ? board.getPosition(from) : null;
-        Position toPosition = to != null ? board.getPosition(to) : null;
+        Position fromPosition = (from != null) ? board.getPosition(from) : null;
+        Position toPosition = (to != null) ? board.getPosition(to) : null;
 
         if (fromPosition != null)
             fromPosition.setPiece(null);

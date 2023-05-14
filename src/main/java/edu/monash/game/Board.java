@@ -15,12 +15,9 @@ public class Board {
     private static final int NUM_POSITIONS_PER_RING = 8;
 
     private final List<Position> positions;
-    private ObjectProperty<Position> placedTileLocation;
-
 
     public Board() {
         positions = createBoardStructure();
-        placedTileLocation = new SimpleObjectProperty<>();
     }
 
     private List<Position> createBoardStructure() {
@@ -43,18 +40,6 @@ public class Board {
         return Arrays.stream(rings)
                 .flatMap(Arrays::stream)
                 .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    public final ObjectProperty<Position> placedTileLocationProperty() {
-        return this.placedTileLocation;
-    }
-
-    public final Position getPlacedTileLocation() {
-        return this.placedTileLocationProperty().get();
-    }
-
-    public final void setPlacedTileLocation(final Position placedTileLocation) {
-        this.placedTileLocationProperty().set(placedTileLocation);
     }
 
     public Position getPosition(int id) {

@@ -36,13 +36,19 @@ public class Position {
         return this;
     }
 
-    public boolean canPieceBePlaced() {
+    public boolean isNeighbourTo(Position other) {
+        return neighbourUp.equals(other) ||
+                neighbourDown.equals(other) ||
+                neighbourLeft.equals(other) ||
+                neighbourRight.equals(other);
+    }
+
+    public boolean canPieceBePlaced(Player player) {
         return occupiedBy == null;
     }
 
     public boolean canPieceBeMoved(Player player) {
-//        return occupiedBy == player.getPieceColour();
-        return true;
+        return occupiedBy == player.getPieceColour();
     }
 
     public boolean canPieceBeRemoved(Player player) {

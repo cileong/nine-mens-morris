@@ -52,4 +52,8 @@ public class Game {
         turnCount++;
     }
 
+    public boolean isRunning() {
+        return player1.hasLost() || player2.hasLost();
+    }
+
 }
