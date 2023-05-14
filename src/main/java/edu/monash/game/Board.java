@@ -16,6 +16,7 @@ public class Board {
 
     private final List<Position> positions;
 
+
     public Board() {
         positions = createBoardStructure();
     }
@@ -41,6 +42,7 @@ public class Board {
                 .flatMap(Arrays::stream)
                 .collect(Collectors.toCollection(ArrayList::new));
     }
+
 
     public Position getPosition(int id) {
         return positions.stream()
