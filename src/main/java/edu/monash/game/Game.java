@@ -63,10 +63,4 @@ public class Game {
         return !player1.hasLost() && !player2.hasLost();
     }
 
-    public void run() {
-//        while (isRunning()) {
-//            switchPlayer();
-//        }
-    }
-
 }
