@@ -110,37 +110,47 @@ public class GameBoardGridPane extends GridPane {
         }
 
         private void onDragOverHandler(DragEvent event) {
-            if (!event.getGestureSource().equals(imageView))
+            if (event.getTransferMode() != TransferMode.MOVE || !event.getGestureSource().equals(imageView))
                 event.acceptTransferModes(TransferMode.MOVE);
 
             event.consume();
         }
 
         private void onDragDroppedHandler(DragEvent event) {
+            if (event.getTransferMode() != TransferMode.MOVE)
+                return;
+
             Dragboard db = event.getDragboard();
 
-            if (db.hasImage()) {
-                Integer sourceId = db.hasString() ? Integer.parseInt(db.getString()) : null;
-                Integer destinationId = getPositionId(
-                        getColumnIndex(imageView),
-                        getRowIndex(imageView)
-                );
+            Integer sourceId = db.hasString() ? Integer.parseInt(db.getString()) : null;
+            Integer destinationId = getPositionId(
+                    getColumnIndex(imageView),
+                    getRowIndex(imageView)
+            );
 
-                Action action = sourceId != null
-                        ? new MoveAction(game.getPlayer(), sourceId, destinationId)
-                        : new PlaceAction(game.getPlayer(), destinationId);
-                boolean executed = game.execute(action);
-                System.out.println(game.getPlayer().getPieceColour() + " " + executed);
+            Action action = sourceId != null
+                    ? new MoveAction(game.getPlayer(), sourceId, destinationId)
+                    : new PlaceAction(game.getPlayer(), destinationId);
+            boolean executed = game.execute(action);
 
+            if (executed)
                 imageView.setImage(db.getImage());
-                event.setDropCompleted(true);
-            }
 
+            ClipboardContent content = new ClipboardContent();
+            content.putString(Boolean.toString(executed));
+            db.setContent(content);
+
+            event.setDropCompleted(true);
             event.consume();
         }
 
         private void onDragDoneHandler(DragEvent event) {
-            if (event.getTransferMode() == TransferMode.MOVE)
+            if (event.getTransferMode() != TransferMode.MOVE)
+                return;
+
+            Dragboard db = event.getDragboard();
+            boolean executed = Boolean.parseBoolean(db.getString());
+            if (executed)
                 imageView.setImage(null);
 
             event.consume();

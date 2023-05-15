@@ -52,7 +52,12 @@ public class PlayerHandGridPane extends GridPane {
         }
 
         private void onDragDoneHandler(DragEvent event) {
-            if (event.getTransferMode() == TransferMode.MOVE)
+            if (event.getTransferMode() != TransferMode.MOVE)
+                return;
+
+            Dragboard db = event.getDragboard();
+            boolean executed = Boolean.parseBoolean(db.getString());
+            if (executed)
                 imageView.setImage(null);
 
             event.consume();
