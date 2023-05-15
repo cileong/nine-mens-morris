@@ -21,8 +21,6 @@ public class ViewController {
         boardGrid.initialize(game);
         blackGrid.initialize(game);
         whiteGrid.initialize(game);
-
-        game.run();
     }
 
 }
