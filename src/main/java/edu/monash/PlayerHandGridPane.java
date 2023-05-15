@@ -6,10 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 
-import static javafx.scene.input.DragEvent.*;
-import static javafx.scene.input.MouseEvent.DRAG_DETECTED;
-import static javafx.scene.input.TransferMode.MOVE;
-
 public class PlayerHandGridPane extends GridPane {
 
     void initialize() {
@@ -24,7 +20,7 @@ public class PlayerHandGridPane extends GridPane {
 
         @Override
         public void handle(MouseEvent event) {
-            if (event.getEventType() == DRAG_DETECTED)
+            if (event.getEventType() == MouseEvent.DRAG_DETECTED)
                 onDragDetectedHandler(event);
         }
 
@@ -32,7 +28,7 @@ public class PlayerHandGridPane extends GridPane {
             if (imageView.getImage() == null)
                 return;
 
-            Dragboard dragboard = imageView.startDragAndDrop(TransferMode.ANY);
+            Dragboard dragboard = imageView.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
             content.putImage(imageView.getImage());
             dragboard.setContent(content);
@@ -46,12 +42,12 @@ public class PlayerHandGridPane extends GridPane {
 
         @Override
         public void handle(DragEvent event) {
-            if (event.getEventType() == DRAG_DONE)
+            if (event.getEventType() == DragEvent.DRAG_DONE)
                 onDragDoneHandler(event);
         }
 
         private void onDragDoneHandler(DragEvent event) {
-            if (event.getTransferMode() == MOVE)
+            if (event.getTransferMode() == TransferMode.MOVE)
                 imageView.setImage(null);
 
             event.consume();

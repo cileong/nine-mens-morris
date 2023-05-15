@@ -6,11 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 
-import static javafx.scene.input.DragEvent.*;
-import static javafx.scene.input.MouseEvent.DRAG_DETECTED;
-import static javafx.scene.input.MouseEvent.MOUSE_CLICKED;
-import static javafx.scene.input.TransferMode.MOVE;
-
 public class GameBoardGridPane extends GridPane {
 
     private static final Integer[][] boardMapping = {
@@ -50,9 +45,9 @@ public class GameBoardGridPane extends GridPane {
 
         @Override
         public void handle(MouseEvent event) {
-            if (event.getEventType() == DRAG_DETECTED)
+            if (event.getEventType() == MouseEvent.DRAG_DETECTED)
                 onDragDetectedHandler(event);
-            else if (event.getEventType() == MOUSE_CLICKED)
+            else if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
                 onMouseClickedHandler(event);
         }
 
@@ -69,7 +64,7 @@ public class GameBoardGridPane extends GridPane {
                     getRowIndex(imageView)
             );
 
-            Dragboard dragboard = imageView.startDragAndDrop(TransferMode.ANY);
+            Dragboard dragboard = imageView.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
             content.putImage(imageView.getImage());
             if (sourceId != null)
@@ -85,11 +80,11 @@ public class GameBoardGridPane extends GridPane {
 
         @Override
         public void handle(DragEvent event) {
-            if (event.getEventType() == DRAG_OVER)
+            if (event.getEventType() == DragEvent.DRAG_OVER)
                 onDragOverHandler(event);
-            else if (event.getEventType() == DRAG_DROPPED)
+            else if (event.getEventType() == DragEvent.DRAG_DROPPED)
                 onDragDroppedHandler(event);
-            else if (event.getEventType() == DRAG_DONE)
+            else if (event.getEventType() == DragEvent.DRAG_DONE)
                 onDragDoneHandler(event);
         }
 
@@ -97,7 +92,7 @@ public class GameBoardGridPane extends GridPane {
             Dragboard db = event.getDragboard();
 
             if (!event.getGestureSource().equals(imageView) && db.hasImage())
-                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                event.acceptTransferModes(TransferMode.MOVE);
 
             event.consume();
         }
@@ -123,7 +118,7 @@ public class GameBoardGridPane extends GridPane {
         }
 
         private void onDragDoneHandler(DragEvent event) {
-            if (event.getTransferMode() == MOVE)
+            if (event.getTransferMode() == TransferMode.MOVE)
                 imageView.setImage(null);
 
             event.consume();
