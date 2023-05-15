@@ -2,11 +2,11 @@ package edu.monash.game;
 
 public class Move {
 
-    private final Piece piece;
+    private final PieceColour pieceColour;
     private final Integer from, to;
 
-    public Move(Piece piece, Integer from, Integer to) {
-        this.piece = piece;
+    public Move(PieceColour pieceColour, Integer from, Integer to) {
+        this.pieceColour = pieceColour;
         this.from = from;
         this.to = to;
     }
@@ -27,7 +27,7 @@ public class Move {
             fromPosition.setPiece(null);
 
         if (toPosition != null)
-            toPosition.setPiece(piece);
+            toPosition.setPiece(pieceColour);
     }
 
 }

@@ -2,8 +2,9 @@ package edu.monash.game.player;
 
 import edu.monash.game.Board;
 import edu.monash.game.Move;
+import edu.monash.game.Position;
 
-public class JumpPhase implements PlayerPhase {
+class JumpPhase implements PlayerPhase {
 
     private final Player player;
 
@@ -11,12 +12,14 @@ public class JumpPhase implements PlayerPhase {
         this.player = player;
     }
 
+    @Override
     public boolean validate(Board board, Move move) {
-        return false;
+        return true;
     }
 
     @Override
     public void transition() {
+        // To terminal state. Player has lost.
         if (player.getPiecesOnBoard() < 3)
             player.setPhase(unused -> null);
     }

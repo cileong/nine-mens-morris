@@ -30,24 +30,31 @@ public class Game {
     }
 
     public void storePlayedMove(Move move) {
-        movesPlayed.push(move);
+        if (move != null)
+            movesPlayed.push(move);
     }
 
     public void initializeNewGame() {
         board = new Board();
 
-        player1 = new Player(Piece.BLACK, PlacePhase::new);
-        player2 = new Player(Piece.WHITE, PlacePhase::new);
+        player1 = new Player(PieceColour.BLACK, PlacePhase::new);
+        player2 = new Player(PieceColour.WHITE, PlacePhase::new);
         currentPlayer = player1;
+
+        turnCount = 0;
 
         movesPlayed = new Stack<>();
     }
 
-    public Player getCurrentPlayer() {
+    public Player getPlayer() {
         return currentPlayer;
     }
 
-    private void switchPlayer() {
+    public Player getOpponent() {
+        return currentPlayer.equals(player1) ? player2 : player1;
+    }
+
+    public void switchActivePlayer() {
         currentPlayer = currentPlayer.equals(player1) ? player2 : player1;
         turnCount++;
     }
@@ -56,13 +63,10 @@ public class Game {
         return !player1.hasLost() && !player2.hasLost();
     }
 
-    public boolean run(){
-        while (isRunning()){
-
-            switchPlayer();
-            return true;
-        }
-        return false;
+    public void run() {
+//        while (isRunning()) {
+//            switchPlayer();
+//        }
     }
 
 }

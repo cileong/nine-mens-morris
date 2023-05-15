@@ -1,8 +1,5 @@
 package edu.monash.game;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +41,10 @@ public class Board {
     }
 
 
-    public Position getPosition(int id) {
+    public Position getPosition(Integer id) {
+        if (id == null)
+            return null;
+
         return positions.stream()
                 .filter(position -> position.getId() == id)
                 .findFirst()

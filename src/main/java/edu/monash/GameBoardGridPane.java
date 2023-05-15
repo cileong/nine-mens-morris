@@ -1,5 +1,10 @@
 package edu.monash;
 
+import edu.monash.game.Game;
+import edu.monash.game.actions.Action;
+import edu.monash.game.actions.MoveAction;
+import edu.monash.game.actions.PlaceAction;
+import edu.monash.game.actions.RemoveAction;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -8,25 +13,29 @@ import javafx.scene.layout.GridPane;
 
 public class GameBoardGridPane extends GridPane {
 
+    private Game game;
+
     private static final Integer[][] boardMapping = {
-            {    0, null, null,    1, null, null,    2 },
-            { null,    8, null,    9, null,   10, null },
-            { null, null,   16,   17,   18, null, null },
-            {    7,   15,   23, null,   19,   11,    3 },
-            { null, null,   22,   21,   20, null, null },
-            { null,   14, null,   13, null,   12, null },
-            {    6, null, null,    5, null, null,    4 }
+            {0, null, null, 1, null, null, 2},
+            {null, 8, null, 9, null, 10, null},
+            {null, null, 16, 17, 18, null, null},
+            {7, 15, 23, null, 19, 11, 3},
+            {null, null, 22, 21, 20, null, null},
+            {null, 14, null, 13, null, 12, null},
+            {6, null, null, 5, null, null, 4}
     };
 
-    void initialize() {
+    void initialize(Game game) {
+        this.game = game;
+
         for (Node node : this.getChildren()) {
             ImageView imageView = (ImageView) node;
 
-            EventHandler<MouseEvent> mouseEventHandler = new MouseEventHandler(imageView);
+            EventHandler<MouseEvent> mouseEventHandler = new MouseEventHandler(game, imageView);
             imageView.setOnMouseClicked(mouseEventHandler);
             imageView.setOnDragDetected(mouseEventHandler);
 
-            EventHandler<DragEvent> dragEventHandler = new DragEventHandler(imageView);
+            EventHandler<DragEvent> dragEventHandler = new DragEventHandler(game, imageView);
             imageView.setOnDragOver(dragEventHandler);
             imageView.setOnDragDropped(dragEventHandler);
             imageView.setOnDragDone(dragEventHandler);
@@ -41,7 +50,7 @@ public class GameBoardGridPane extends GridPane {
         }
     }
 
-    private record MouseEventHandler(ImageView imageView) implements EventHandler<MouseEvent> {
+    private record MouseEventHandler(Game game, ImageView imageView) implements EventHandler<MouseEvent> {
 
         @Override
         public void handle(MouseEvent event) {
@@ -52,7 +61,19 @@ public class GameBoardGridPane extends GridPane {
         }
 
         private void onMouseClickedHandler(MouseEvent event) {
+            if (imageView.getImage() == null)
+                return;
 
+            Integer fromId = getPositionId(
+                    getColumnIndex(imageView),
+                    getRowIndex(imageView)
+            );
+
+            Action action = new RemoveAction(game.getPlayer(), fromId);
+            boolean executed = game.execute(action);
+            System.out.println(game.getPlayer().getPieceColour() + " " + executed);
+
+            event.consume();
         }
 
         private void onDragDetectedHandler(MouseEvent event) {
@@ -64,19 +85,19 @@ public class GameBoardGridPane extends GridPane {
                     getRowIndex(imageView)
             );
 
-            Dragboard dragboard = imageView.startDragAndDrop(TransferMode.MOVE);
+            Dragboard db = imageView.startDragAndDrop(TransferMode.MOVE);
             ClipboardContent content = new ClipboardContent();
             content.putImage(imageView.getImage());
             if (sourceId != null)
                 content.putString(String.valueOf(sourceId));
-            dragboard.setContent(content);
+            db.setContent(content);
 
             event.consume();
         }
 
     }
 
-    private record DragEventHandler(ImageView imageView) implements EventHandler<DragEvent> {
+    private record DragEventHandler(Game game, ImageView imageView) implements EventHandler<DragEvent> {
 
         @Override
         public void handle(DragEvent event) {
@@ -89,9 +110,7 @@ public class GameBoardGridPane extends GridPane {
         }
 
         private void onDragOverHandler(DragEvent event) {
-            Dragboard db = event.getDragboard();
-
-            if (!event.getGestureSource().equals(imageView) && db.hasImage())
+            if (!event.getGestureSource().equals(imageView))
                 event.acceptTransferModes(TransferMode.MOVE);
 
             event.consume();
@@ -107,8 +126,11 @@ public class GameBoardGridPane extends GridPane {
                         getRowIndex(imageView)
                 );
 
-                System.out.println("sourceId: " + sourceId);
-                System.out.println("destinationId: " + destinationId);
+                Action action = sourceId != null
+                        ? new MoveAction(game.getPlayer(), sourceId, destinationId)
+                        : new PlaceAction(game.getPlayer(), destinationId);
+                boolean executed = game.execute(action);
+                System.out.println(game.getPlayer().getPieceColour() + " " + executed);
 
                 imageView.setImage(db.getImage());
                 event.setDropCompleted(true);

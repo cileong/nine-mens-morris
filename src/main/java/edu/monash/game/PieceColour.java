@@ -1,6 +1,6 @@
 package edu.monash.game;
 
-public enum Piece {
+public enum PieceColour {
 
     BLACK,
     WHITE

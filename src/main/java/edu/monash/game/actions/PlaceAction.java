@@ -16,6 +16,9 @@ public class PlaceAction implements Action {
 
     @Override
     public boolean isValid(Game game, Player player) {
+        if (player.hasFormedMill())
+            return false;
+
         Board board = game.getBoard();
         Position destination = board.getPosition(move.getTo());
         return destination.canPieceBePlaced(player);
@@ -25,6 +28,20 @@ public class PlaceAction implements Action {
     public void executeOn(Game game) {
         move.executeOn(game.getBoard());
         game.storePlayedMove(move);
+
+        // Test whether the player has formed a mill.
+        Board board = game.getBoard();
+        Position destination = board.getPosition(move.getTo());
+        if (destination.isInVerticalMill() || destination.isInHorizontalMill())
+            game.getPlayer().setHasFormedMill(true);
+
+        game.getPlayer().attemptTransitionPhase();
+        game.getOpponent().attemptTransitionPhase();
+
+        // If the player has formed a mill as a result of this move,
+        // do not switch the control to the other player.
+        if (!game.getPlayer().hasFormedMill())
+            game.switchActivePlayer();
     }
 
 }

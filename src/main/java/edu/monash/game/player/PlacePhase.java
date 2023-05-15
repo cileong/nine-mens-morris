@@ -2,6 +2,7 @@ package edu.monash.game.player;
 
 import edu.monash.game.Board;
 import edu.monash.game.Move;
+import edu.monash.game.Position;
 
 public class PlacePhase implements PlayerPhase {
 
@@ -13,8 +14,10 @@ public class PlacePhase implements PlayerPhase {
 
     @Override
     public boolean validate(Board board, Move move) {
-        // Only accept moves with no source.
-        return move.getFrom() == null && move.getTo() != null;
+        Position source = board.getPosition(move.getFrom()),
+                destination = board.getPosition(move.getTo());
+
+        return source == null && destination != null;
     }
 
     @Override

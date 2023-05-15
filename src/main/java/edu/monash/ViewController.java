@@ -1,5 +1,6 @@
 package edu.monash;
 
+import edu.monash.game.Game;
 import javafx.fxml.FXML;
 
 public class ViewController {
@@ -11,11 +12,17 @@ public class ViewController {
     @FXML
     private PlayerHandGridPane whiteGrid;
 
+    private Game game;
+
     @FXML
     private void initialize() {
-        boardGrid.initialize();
-        blackGrid.initialize();
-        whiteGrid.initialize();
+        game = new Game();
+
+        boardGrid.initialize(game);
+        blackGrid.initialize(game);
+        whiteGrid.initialize(game);
+
+        game.run();
     }
 
 }

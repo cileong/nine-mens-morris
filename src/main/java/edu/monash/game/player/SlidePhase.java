@@ -14,14 +14,15 @@ public class SlidePhase implements PlayerPhase {
         this.player = player;
     }
 
+    @Override
     public boolean validate(Board board, Move move) {
         Position source = board.getPosition(move.getFrom()),
                 destination = board.getPosition(move.getTo());
 
-        return source != null && destination != null &&
-                source.isNeighbourTo(destination);
+        return source != null && source.isNeighbourTo(destination);
     }
 
+    @Override
     public void transition() {
         if (player.getPiecesOnBoard() == 3)
             player.setPhase(JumpPhase::new);

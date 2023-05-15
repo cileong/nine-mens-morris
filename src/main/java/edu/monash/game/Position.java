@@ -6,7 +6,7 @@ public class Position {
     private static int idCounter = 0;
     private final int id;
     private Position neighbourUp, neighbourDown, neighbourLeft, neighbourRight;
-    private Piece occupiedBy;
+    private PieceColour occupiedBy;
 
     public Position() {
         this.id = idCounter++;
@@ -58,12 +58,12 @@ public class Position {
                 !isInVerticalMill();
     }
 
-    public Piece getPiece() {
+    public PieceColour getPiece() {
         return occupiedBy;
     }
 
-    public void setPiece(Piece piece) {
-        occupiedBy = piece;
+    public void setPiece(PieceColour pieceColour) {
+        occupiedBy = pieceColour;
     }
 
     public boolean isInHorizontalMill() {
@@ -72,7 +72,7 @@ public class Position {
                     neighbourRight.occupiedBy == occupiedBy;
         } else {
             return (neighbourLeft != null && neighbourLeft.isInHorizontalMill()) ||
-                    neighbourRight.isInHorizontalMill();
+                    (neighbourRight != null && neighbourRight.isInHorizontalMill());
         }
     }
 
@@ -81,9 +81,8 @@ public class Position {
             return neighbourUp.occupiedBy == occupiedBy &&
                     neighbourDown.occupiedBy == occupiedBy;
         } else {
-            assert neighbourUp != null || neighbourDown != null;
             return (neighbourUp != null && neighbourUp.isInVerticalMill()) ||
-                    neighbourDown.isInVerticalMill();
+                    (neighbourDown != null && neighbourDown.isInVerticalMill());
         }
     }
 

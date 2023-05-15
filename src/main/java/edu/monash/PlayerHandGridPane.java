@@ -1,5 +1,6 @@
 package edu.monash;
 
+import edu.monash.game.Game;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -8,7 +9,11 @@ import javafx.scene.layout.GridPane;
 
 public class PlayerHandGridPane extends GridPane {
 
-    void initialize() {
+    private Game game;
+
+    void initialize(Game game) {
+        this.game = game;
+
         for (Node node : this.getChildren()) {
             ImageView imageView = (ImageView) node;
             imageView.setOnDragDetected(new MouseEventHandler(imageView));

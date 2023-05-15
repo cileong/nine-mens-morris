@@ -16,6 +16,9 @@ public class RemoveAction implements Action {
 
     @Override
     public boolean isValid(Game game, Player player) {
+        if (!player.hasFormedMill())
+            return false;
+
         Board board = game.getBoard();
         Position source = board.getPosition(move.getFrom());
         return source.canPieceBeRemoved(player);
@@ -25,6 +28,13 @@ public class RemoveAction implements Action {
     public void executeOn(Game game) {
         move.executeOn(game.getBoard());
         game.storePlayedMove(move);
+
+        game.getPlayer().attemptTransitionPhase();
+        game.getOpponent().attemptTransitionPhase();
+
+        game.getPlayer().setHasFormedMill(false);
+
+        game.switchActivePlayer();
     }
 
 }
