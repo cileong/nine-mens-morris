@@ -62,15 +62,15 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
-            <ImageView fx:id="black1" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" />
-            <ImageView fx:id="black2" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-            <ImageView fx:id="black3" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
-            <ImageView fx:id="black4" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
-            <ImageView fx:id="black5" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
-            <ImageView fx:id="black6" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5" />
-            <ImageView fx:id="black7" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6" />
-            <ImageView fx:id="black8" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="7" />
-            <ImageView fx:id="black9" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="8" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="8" GridPane.columnIndex="0" />
         </GridPane>
       <Separator orientation="VERTICAL" prefHeight="502.0" prefWidth="0.0" />
         <GridPane id="board-grid" fx:id="boardGrid" alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
@@ -133,15 +133,15 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
-            <ImageView fx:id="white1" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" />
-            <ImageView fx:id="white2" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
-            <ImageView fx:id="white3" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
-            <ImageView fx:id="white4" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
-            <ImageView fx:id="white5" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" />
-            <ImageView fx:id="white6" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5" />
-            <ImageView fx:id="white7" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6" />
-            <ImageView fx:id="white8" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="7" />
-            <ImageView fx:id="white9" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="8" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="8" GridPane.columnIndex="0" />
         </GridPane>
     </HBox>
     <Label alignment="CENTER" text="Label">
