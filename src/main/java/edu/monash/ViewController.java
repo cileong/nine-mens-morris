@@ -1,29 +1,27 @@
 package edu.monash;
 
 import edu.monash.game.Game;
-import edu.monash.game.actions.Action;
 import edu.monash.game.actions.MoveAction;
+import edu.monash.game.actions.PlaceAction;
 import edu.monash.game.actions.RemoveAction;
-import edu.monash.game.player.Player;
-import javafx.application.Platform;
+import edu.monash.game.player.PlacePhase;
+import edu.monash.game.player.SlidePhase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.util.Optional;
-import edu.monash.game.Piece;
-import edu.monash.game.Position;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ViewController {
 
@@ -98,70 +96,21 @@ public class ViewController {
     };
 
     public Integer getPositionId(int x, int y) {
-        assert x >= 0 && x < boardMapping.length;
-        assert y >= 0 && y < boardMapping[0].length;
-        assert boardMapping[y][x] != null;
-        return boardMapping[y][x];
+        try {
+            return boardMapping[y][x];
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-//    private void setupDragAndDrop(GridPane gridPane) {
-//        for (Node child : gridPane.getChildren()) {
-//            child.setOnDragDetected(event -> onDragDetectedHandler(child, event));
-//            child.setOnDragOver(event -> onDragOverHandler(child, event));
-//            child.setOnDragDropped(event -> onDragDroppedHandler(child, event));
-//        }
-//    }
-//
-//    private void onDragDetectedHandler(Node child, MouseEvent event) {
-//        int sourceX = GridPane.getColumnIndex(child),
-//            sourceY = GridPane.getRowIndex(child);
-//        System.out.println(sourceX + " " + sourceY);
-//
-//        Dragboard dragboard = child.startDragAndDrop(TransferMode.MOVE);
-//        ClipboardContent content = new ClipboardContent();
-//
-//        content.put(GRID_PANE_CELL_FORMAT, new int[] { sourceX, sourceY });
-//        dragboard.setContent(content);
-//
-//        event.consume();
-//    }
-//
-//    private void onDragOverHandler(Node child, DragEvent event) {
-//        if (event.getGestureSource() != child &&
-//                event.getDragboard().hasContent(GRID_PANE_CELL_FORMAT))
-//            event.acceptTransferModes(TransferMode.MOVE);
-//
-//        event.consume();
-//    }
-//
-//    private void onDragDroppedHandler(Node child, DragEvent event) {
-//        Dragboard dragboard = event.getDragboard();
-//        boolean success = dragboard.hasContent(GRID_PANE_CELL_FORMAT);
-//
-//        if (success) {
-//            int[] sourceIndices = (int[]) dragboard.getContent(GRID_PANE_CELL_FORMAT);
-//            int sourceX = sourceIndices[0];
-//            int sourceY = sourceIndices[1];
-//
-//            int destinationX = GridPane.getColumnIndex(child);
-//            int destinationY = GridPane.getRowIndex(child);
-//
-//            System.out.println("Source GridPane indices: (" + sourceX + ", " + sourceY + ")");
-//            System.out.println("Destination GridPane indices: (" + destinationX + ", " + destinationY + ")");
-//            System.out.println(boardMapping[destinationY][destinationX]);
-//        }
-//
-//        event.setDropCompleted(success);
-//        event.consume();
-//    }
-
-    private void removeTileWhenMillIsFormed() {
+    private void removePieceWhenMillIsFormed() {
         for (ImageView imageView : boardGridChildren) {
             imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 
-                int destinationX = GridPane.getRowIndex(imageView);
-                int destinationY = GridPane.getColumnIndex(imageView);
-                int positionOnBoard = getPositionId(destinationX, destinationY);
+                Integer destinationX = GridPane.getRowIndex(imageView);
+                Integer destinationY = GridPane.getColumnIndex(imageView);
+                Integer positionOnBoard = getPositionId(destinationX, destinationY);
                 boolean canRemove = game.execute(new RemoveAction(game.getCurrentPlayer(), positionOnBoard));
                 System.out.println("Can remove: " + canRemove);
 
@@ -172,7 +121,7 @@ public class ViewController {
                                 imageView.setId(null);
 
                             } else {
-                                showInvalidMoveDialog("Selected tile cannot be removed.");
+                                showInvalidMoveDialog("Selected piece cannot be removed.");
                             }
                 }
                 event.consume();
@@ -191,8 +140,15 @@ public class ViewController {
 
     private void initDrag(GridPane grid) {
         for (Node i : grid.getChildren()) {
-            if (!(i instanceof ImageView imageView))
-                continue;
+//            if (!(i instanceof ImageView imageView)) {
+//                System.out.println(i instanceof HBox);
+//                continue;
+//            }
+            ImageView imageView = (ImageView) i;
+
+            AtomicInteger sourceX = new AtomicInteger();
+            AtomicInteger sourceY = new AtomicInteger();
+            AtomicInteger sourcePosition = new AtomicInteger(getPositionId(sourceX.get(), sourceY.get()));
 
             imageView.setOnDragDetected(event -> {
                 if (imageView.getImage() == null) {
@@ -204,6 +160,12 @@ public class ViewController {
                 content.putImage(imageView.getImage());
                 content.putString(imageView.getId());
                 db.setContent(content);
+
+                if (grid == boardGrid){
+                    sourceX.set(GridPane.getRowIndex(imageView));
+                    sourceY.set(GridPane.getColumnIndex(imageView));
+                    sourcePosition.set(getPositionId(sourceX.get(), sourceY.get()));
+                }
 
                 event.consume();
             });
@@ -228,14 +190,27 @@ public class ViewController {
                 event.consume();
             });
 
+            int finalSourcePosition = sourcePosition.get();
             imageView.setOnDragDropped(event -> { // DragEvent
                 Dragboard db = event.getDragboard();
                 if (db.hasImage() && db.hasString()) {
+                    Integer destinationX = GridPane.getRowIndex(imageView);
+                    Integer destinationY = GridPane.getColumnIndex(imageView);
+                    Integer destinationPosition = getPositionId(destinationX, destinationY);
+
+                    if (game.getCurrentPlayer().getPhase() instanceof PlacePhase) {
+                        boolean canPlace = game.execute(new PlaceAction(game.getCurrentPlayer(), destinationPosition));
+                        System.out.println("position: " + destinationPosition + "Can Place: " + canPlace);
+                    } else if (game.getCurrentPlayer().getPhase() instanceof SlidePhase){
+                        boolean canMove = game.execute(new MoveAction(game.getCurrentPlayer(), finalSourcePosition,destinationPosition));
+                        System.out.println("position: " + destinationPosition + "Can Move: " + canMove);
+                    }
 
                     imageView.setImage(db.getImage());
                     imageView.setId(db.getString());
 
                     event.setDropCompleted(true);
+
                 }
                 event.consume();
             });
@@ -257,7 +232,7 @@ public class ViewController {
         initDrag(blackGrid);
         initDrag(whiteGrid);
         initDrag(boardGrid);
-        removeTileWhenMillIsFormed();
+        removePieceWhenMillIsFormed();
 //        System.out.println("HELLO WORLD");
     }
 
