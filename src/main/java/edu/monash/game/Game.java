@@ -24,7 +24,6 @@ public class Game {
     public boolean execute(Action action) {
         if (action.isValid(this, currentPlayer)) {
             action.executeOn(this);
-            switchPlayer();
             return true;
         }
         return false;
@@ -48,13 +47,22 @@ public class Game {
         return currentPlayer;
     }
 
-    public void switchPlayer() {
+    private void switchPlayer() {
         currentPlayer = currentPlayer.equals(player1) ? player2 : player1;
         turnCount++;
     }
 
     public boolean isRunning() {
-        return player1.hasLost() || player2.hasLost();
+        return !player1.hasLost() && !player2.hasLost();
+    }
+
+    public boolean run(){
+        while (isRunning()){
+
+            switchPlayer();
+            return true;
+        }
+        return false;
     }
 
 }
