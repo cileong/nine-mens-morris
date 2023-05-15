@@ -36,31 +36,13 @@ public class ViewController {
         this.stage = stage;
     }
 
-    private static final Integer[][] boardMapping = {
-            {    0, null, null,    1, null, null,    2 },
-            { null,    8, null,    9, null,   10, null },
-            { null, null,   16,   17,   18, null, null },
-            {    7,   15,   23, null,   19,   11,    3 },
-            { null, null,   22,   21,   20, null, null },
-            { null,   14, null,   13, null,   12, null },
-            {    6, null, null,    5, null, null,    4 }
-    };
-
-    public static Integer getPositionId(Integer x, Integer y) {
-        try {
-            return boardMapping[y][x];
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            return null;
-        }
-    }
-
     private void removePieceWhenMillIsFormed() {
         for (ImageView imageView : boardGridChildren) {
             imageView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 
                 Integer destinationX = GridPane.getRowIndex(imageView);
                 Integer destinationY = GridPane.getColumnIndex(imageView);
-                Integer positionOnBoard = getPositionId(destinationX, destinationY);
+                Integer positionOnBoard = GameBoardGridPane.getPositionId(destinationX, destinationY);
                 boolean canRemove = game.execute(new RemoveAction(game.getCurrentPlayer(), positionOnBoard));
                 System.out.println("Can remove: " + canRemove);
 

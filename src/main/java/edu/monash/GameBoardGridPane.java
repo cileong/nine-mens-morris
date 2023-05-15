@@ -13,6 +13,16 @@ import static javafx.scene.input.TransferMode.MOVE;
 
 public class GameBoardGridPane extends GridPane {
 
+    private static final Integer[][] boardMapping = {
+            {    0, null, null,    1, null, null,    2 },
+            { null,    8, null,    9, null,   10, null },
+            { null, null,   16,   17,   18, null, null },
+            {    7,   15,   23, null,   19,   11,    3 },
+            { null, null,   22,   21,   20, null, null },
+            { null,   14, null,   13, null,   12, null },
+            {    6, null, null,    5, null, null,    4 }
+    };
+
     void initialize() {
         for (Node node : this.getChildren()) {
             ImageView imageView = (ImageView) node;
@@ -25,6 +35,14 @@ public class GameBoardGridPane extends GridPane {
             imageView.setOnDragOver(dragEventHandler);
             imageView.setOnDragDropped(dragEventHandler);
             imageView.setOnDragDone(dragEventHandler);
+        }
+    }
+
+    static Integer getPositionId(Integer x, Integer y) {
+        try {
+            return boardMapping[y][x];
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+            return null;
         }
     }
 
@@ -46,7 +64,7 @@ public class GameBoardGridPane extends GridPane {
             if (imageView.getImage() == null)
                 return;
 
-            Integer sourceId = ViewController.getPositionId(
+            Integer sourceId = getPositionId(
                     getColumnIndex(imageView),
                     getRowIndex(imageView)
             );
@@ -89,10 +107,13 @@ public class GameBoardGridPane extends GridPane {
 
             if (db.hasImage()) {
                 Integer sourceId = db.hasString() ? Integer.parseInt(db.getString()) : null;
-                Integer destinationId = ViewController.getPositionId(
+                Integer destinationId = getPositionId(
                         getColumnIndex(imageView),
                         getRowIndex(imageView)
                 );
+
+                System.out.println("sourceId: " + sourceId);
+                System.out.println("destinationId: " + destinationId);
 
                 imageView.setImage(db.getImage());
                 event.setDropCompleted(true);
