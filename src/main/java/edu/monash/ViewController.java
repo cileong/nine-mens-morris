@@ -1,26 +1,17 @@
 package edu.monash;
 
 import edu.monash.game.Game;
-import edu.monash.game.actions.MoveAction;
-import edu.monash.game.actions.PlaceAction;
 import edu.monash.game.actions.RemoveAction;
-import edu.monash.game.player.PlacePhase;
-import edu.monash.game.player.SlidePhase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ViewController {
 
@@ -35,11 +26,11 @@ public class ViewController {
     @FXML
     private Stage stage;
     @FXML
-    private GridPane boardGrid;
+    private GameBoardGridPane boardGrid;
     @FXML
-    private GridPane blackGrid;
+    private PlayerHandGridPane blackGrid;
     @FXML
-    private GridPane whiteGrid;
+    private PlayerHandGridPane whiteGrid;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -55,7 +46,7 @@ public class ViewController {
             {    6, null, null,    5, null, null,    4 }
     };
 
-    public static Integer getPositionId(int x, int y) {
+    public static Integer getPositionId(Integer x, Integer y) {
         try {
             return boardMapping[y][x];
         } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
@@ -97,26 +88,11 @@ public class ViewController {
         alert.showAndWait();
     }
 
-    private void initDrag(GridPane grid) {
-        for (Node node : grid.getChildren()) {
-            ImageView imageView = (ImageView) node;
-
-            MouseEventHandler mouseEventHandler = new MouseEventHandler(imageView);
-            imageView.setOnDragDetected(mouseEventHandler);
-
-            DragEventHandler dragEventHandler = new DragEventHandler(imageView);
-            imageView.setOnDragOver(dragEventHandler);
-            imageView.setOnDragDropped(dragEventHandler);
-            imageView.setOnDragDone(dragEventHandler);
-        }
-    }
-
     @FXML
     private void initialize() {
-        initDrag(blackGrid);
-        initDrag(whiteGrid);
-        initDrag(boardGrid);
-//        removePieceWhenMillIsFormed();
+        boardGrid.initialize();
+        blackGrid.initialize();
+        whiteGrid.initialize();
     }
 
 }
