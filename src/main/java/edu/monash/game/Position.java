@@ -37,10 +37,10 @@ public class Position {
     }
 
     public boolean isNeighbourTo(Position other) {
-        return neighbourUp.equals(other) ||
-                neighbourDown.equals(other) ||
-                neighbourLeft.equals(other) ||
-                neighbourRight.equals(other);
+        return (neighbourUp != null && neighbourUp.equals(other)) ||
+                (neighbourDown != null && neighbourDown.equals(other)) ||
+                (neighbourLeft != null && neighbourLeft.equals(other)) ||
+                (neighbourRight != null && neighbourRight.equals(other));
     }
 
     public boolean canPieceBePlaced(Player player) {

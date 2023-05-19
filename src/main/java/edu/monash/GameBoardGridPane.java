@@ -71,6 +71,8 @@ public class GameBoardGridPane extends GridPane {
 
             Action action = new RemoveAction(game.getPlayer(), fromId);
             boolean executed = game.execute(action);
+            if (executed)
+                imageView.setImage(null);
             System.out.println(game.getPlayer().getPieceColour() + " " + executed);
 
             event.consume();

@@ -73,4 +73,12 @@ public class Board {
         return (length + index) % length;
     }
 
+    @Override
+    public String toString() {
+        // Get the occupiedBy of all positions in the positions array
+        List<PieceColour> occupiedBy = positions.stream()
+                .map(Position::getPiece)
+                .toList();
+        return String.format("Board{positions=%s}", occupiedBy);
+    }
 }

@@ -24,6 +24,7 @@ public class Game {
     public boolean execute(Action action) {
         if (action.isValid(this, currentPlayer)) {
             action.executeOn(this);
+            System.out.println(board.toString());
             return true;
         }
         return false;
