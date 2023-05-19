@@ -1,6 +1,7 @@
 package edu.monash;
 
 import edu.monash.game.Game;
+import edu.monash.game.PieceColour;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
@@ -10,9 +11,11 @@ import javafx.scene.layout.GridPane;
 public class PlayerHandGridPane extends GridPane {
 
     private Game game;
+    private PieceColour pieceColour;
 
-    void initialize(Game game) {
+    void initialize(Game game, PieceColour pieceColour) {
         this.game = game;
+        this.pieceColour = pieceColour;
 
         for (Node node : this.getChildren()) {
             ImageView imageView = (ImageView) node;
@@ -21,7 +24,13 @@ public class PlayerHandGridPane extends GridPane {
         }
     }
 
-    private record MouseEventHandler(ImageView imageView) implements EventHandler<MouseEvent> {
+    private class MouseEventHandler implements EventHandler<MouseEvent> {
+
+        private final ImageView imageView;
+
+        MouseEventHandler(ImageView imageView) {
+            this.imageView = imageView;
+        }
 
         @Override
         public void handle(MouseEvent event) {
@@ -30,7 +39,7 @@ public class PlayerHandGridPane extends GridPane {
         }
 
         private void onDragDetectedHandler(MouseEvent event) {
-            if (imageView.getImage() == null)
+            if (imageView.getImage() == null || game.getPlayer().getPieceColour() != pieceColour)
                 return;
 
             Dragboard dragboard = imageView.startDragAndDrop(TransferMode.MOVE);

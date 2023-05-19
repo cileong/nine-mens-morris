@@ -1,6 +1,7 @@
 package edu.monash;
 
 import edu.monash.game.Game;
+import edu.monash.game.PieceColour;
 import javafx.fxml.FXML;
 
 public class ViewController {
@@ -19,8 +20,8 @@ public class ViewController {
         game = new Game();
 
         boardGrid.initialize(game);
-        blackGrid.initialize(game);
-        whiteGrid.initialize(game);
+        blackGrid.initialize(game, PieceColour.BLACK);
+        whiteGrid.initialize(game, PieceColour.WHITE);
     }
 
 }
