@@ -2,6 +2,8 @@ package edu.monash.game;
 
 import edu.monash.game.player.Player;
 
+import java.util.List;
+
 public class Position {
     private static int idCounter = 0;
     private final int id;
@@ -87,11 +89,16 @@ public class Position {
     }
 
     private boolean isHorizontalAnchor() {
-        return neighbourLeft != null && neighbourRight != null;
+        return id % 2 == 1;
     }
 
     private boolean isVerticalAnchor() {
         return neighbourUp != null && neighbourDown != null;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("Position left: " + neighbourLeft.getId() + " Position right: " + neighbourRight.getId());
     }
 
 }

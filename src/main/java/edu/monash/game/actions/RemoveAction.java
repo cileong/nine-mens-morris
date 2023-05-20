@@ -29,7 +29,9 @@ public class RemoveAction implements Action {
         move.executeOn(game.getBoard());
         game.storePlayedMove(move);
 
-        game.getPlayer().decrementPiecesOnBoard();
+        game.getOpponent().decrementPiecesOnBoard();
+        System.out.println(game.getPlayer().getPieceColour() + " piece: " + game.getPlayer().getPiecesOnBoard());
+        System.out.println(game.getOpponent().getPieceColour() + " piece: " + game.getOpponent().getPiecesOnBoard());
         game.getPlayer().attemptTransitionPhase();
         game.getOpponent().attemptTransitionPhase();
 

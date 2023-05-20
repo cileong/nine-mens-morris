@@ -155,6 +155,8 @@ public class GameBoardGridPane extends GridPane {
             if (executed)
                 imageView.setImage(null);
 
+            System.out.println("Running? " + game.isRunning());
+
             event.consume();
         }
 
