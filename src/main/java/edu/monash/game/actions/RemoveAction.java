@@ -30,14 +30,14 @@ public class RemoveAction implements Action {
         game.storePlayedMove(move);
 
         game.getOpponent().decrementPiecesOnBoard();
-        System.out.println(game.getPlayer().getPieceColour() + " piece: " + game.getPlayer().getPiecesOnBoard());
-        System.out.println(game.getOpponent().getPieceColour() + " piece: " + game.getOpponent().getPiecesOnBoard());
+
         game.getPlayer().attemptTransitionPhase();
         game.getOpponent().attemptTransitionPhase();
 
         game.getPlayer().setHasFormedMill(false);
 
         game.switchActivePlayer();
+
     }
 
 }

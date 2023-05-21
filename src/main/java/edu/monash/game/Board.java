@@ -21,7 +21,7 @@ public class Board {
     private List<Position> createBoardStructure() {
         Position[][] rings = IntStream.range(0, NUM_RINGS)
                 .mapToObj(y -> IntStream.range(0, NUM_POSITIONS_PER_RING)
-                        .mapToObj(x -> new Position())
+                        .mapToObj(x -> new Position((8*y)+x))
                         .toArray(Position[]::new))
                 .toArray(Position[][]::new);
 

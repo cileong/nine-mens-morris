@@ -5,8 +5,12 @@ import edu.monash.game.actions.Action;
 import edu.monash.game.actions.MoveAction;
 import edu.monash.game.actions.PlaceAction;
 import edu.monash.game.actions.RemoveAction;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
@@ -25,13 +29,13 @@ public class GameBoardGridPane extends GridPane {
             {6, null, null, 5, null, null, 4}
     };
 
-    void initialize(Game game) {
+    void initialize(Game game, ViewController viewController) {
         this.game = game;
 
         for (Node node : this.getChildren()) {
             ImageView imageView = (ImageView) node;
 
-            EventHandler<MouseEvent> mouseEventHandler = new MouseEventHandler(game, imageView);
+            EventHandler<MouseEvent> mouseEventHandler = new MouseEventHandler(game, imageView, viewController);
             imageView.setOnMouseClicked(mouseEventHandler);
             imageView.setOnDragDetected(mouseEventHandler);
 
@@ -40,6 +44,7 @@ public class GameBoardGridPane extends GridPane {
             imageView.setOnDragDropped(dragEventHandler);
             imageView.setOnDragDone(dragEventHandler);
         }
+
     }
 
     static Integer getPositionId(Integer x, Integer y) {
@@ -50,8 +55,14 @@ public class GameBoardGridPane extends GridPane {
         }
     }
 
-    private record MouseEventHandler(Game game, ImageView imageView) implements EventHandler<MouseEvent> {
+    void initState(){
+        for (Node node : this.getChildren()) {
+            ImageView imageView = (ImageView) node;
+            imageView.setImage(null);
+        }
+    }
 
+    private record MouseEventHandler(Game game, ImageView imageView, ViewController viewController) implements EventHandler<MouseEvent> {
         @Override
         public void handle(MouseEvent event) {
             if (event.getEventType() == MouseEvent.DRAG_DETECTED)
@@ -73,7 +84,10 @@ public class GameBoardGridPane extends GridPane {
             boolean executed = game.execute(action);
             if (executed)
                 imageView.setImage(null);
-            System.out.println(game.getPlayer().getPieceColour() + " " + executed);
+
+            if (game.getPlayer().hasLost() || game.getOpponent().hasLost()){
+                viewController.showGameWonDialog();
+            }
 
             event.consume();
         }
@@ -154,8 +168,6 @@ public class GameBoardGridPane extends GridPane {
             boolean executed = Boolean.parseBoolean(db.getString());
             if (executed)
                 imageView.setImage(null);
-
-            System.out.println("Running? " + game.isRunning());
 
             event.consume();
         }

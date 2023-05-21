@@ -36,8 +36,6 @@ public class MoveAction implements Action {
         // Test whether the player has formed a mill.
         Board board = game.getBoard();
         Position destination = board.getPosition(move.getTo());
-        System.out.println(destination.toString());
-        System.out.println("Has mill: " + destination.isInVerticalMill() + ", " + destination.isInHorizontalMill());
 
         if (destination.isInVerticalMill() || destination.isInHorizontalMill())
             game.getPlayer().setHasFormedMill(true);

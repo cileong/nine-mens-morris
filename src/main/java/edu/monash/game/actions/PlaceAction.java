@@ -20,7 +20,10 @@ public class PlaceAction implements Action {
             return false;
 
         Board board = game.getBoard();
+        System.out.println("Move: " + move.getTo());
         Position destination = board.getPosition(move.getTo());
+        System.out.println("Destination: " + destination);
+
         return destination.canPieceBePlaced(player);
     }
 
@@ -32,15 +35,13 @@ public class PlaceAction implements Action {
         // Test whether the player has formed a mill.
         Board board = game.getBoard();
         Position destination = board.getPosition(move.getTo());
-        System.out.println(destination.toString());
-        System.out.println("Has mill: " + destination.isInVerticalMill() + ", " + destination.isInHorizontalMill());
+
         if (destination.isInVerticalMill() || destination.isInHorizontalMill())
             game.getPlayer().setHasFormedMill(true);
 
         game.getPlayer().decrementPiecesOnHand();
         game.getPlayer().incrementPiecesOnBoard();
-        System.out.println(game.getPlayer().getPieceColour() + " piece: " + game.getPlayer().getPiecesOnBoard());
-        System.out.println(game.getOpponent().getPieceColour() + " piece: " + game.getOpponent().getPiecesOnBoard());
+
         game.getPlayer().attemptTransitionPhase();
         game.getOpponent().attemptTransitionPhase();
 

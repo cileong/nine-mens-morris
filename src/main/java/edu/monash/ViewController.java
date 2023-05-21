@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.awt.*;
 
@@ -18,23 +20,25 @@ public class ViewController {
     private PlayerHandGridPane blackGrid;
     @FXML
     private PlayerHandGridPane whiteGrid;
-
     private Game game;
 
     @FXML
     private void initialize() {
         game = new Game();
 
-        boardGrid.initialize(game);
+        boardGrid.initialize(game, this);
         blackGrid.initialize(game, PieceColour.BLACK);
         whiteGrid.initialize(game, PieceColour.WHITE);
-
-        if (!game.isRunning()) {
-            showGameWonDialog();
-        }
     }
 
-    private void showGameWonDialog() {
+    void resetView(){
+        blackGrid.initState();
+        whiteGrid.initState();
+        boardGrid.initState();
+        initialize();
+    }
+
+    public void showGameWonDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game won");
         alert.setHeaderText(null);
@@ -43,7 +47,6 @@ public class ViewController {
         } else {
             alert.setContentText(game.getPlayer().getPieceColour() + " won the game!");
         }
-//        alert.initOwner(stage);
         alert.showAndWait();
         if (alert.getResult() == ButtonType.OK) {
             promptDialog("Game won", null, "Game is over. Do you want to start a new game?", 0);
@@ -57,14 +60,12 @@ public class ViewController {
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(contentText);
-//        alert.initOwner(stage);
         alert.getButtonTypes().clear();
         alert.getButtonTypes().addAll(btnYes, btnNo);
         alert.showAndWait();
         if (id == 0) {
             if (alert.getResult() == btnYes) {
-                initialize();
-                game.initializeNewGame();
+                resetView();
             }
         } else if (id == 1) {
             if (alert.getResult() == btnYes) {
@@ -72,7 +73,6 @@ public class ViewController {
             }
         }
     }
-
 }
 
 

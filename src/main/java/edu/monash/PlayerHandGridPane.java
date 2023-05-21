@@ -4,6 +4,7 @@ import edu.monash.game.Game;
 import edu.monash.game.PieceColour;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
@@ -12,6 +13,8 @@ public class PlayerHandGridPane extends GridPane {
 
     private Game game;
     private PieceColour pieceColour;
+    private Image blackImage;
+    private Image whiteImage;
 
     void initialize(Game game, PieceColour pieceColour) {
         this.game = game;
@@ -22,7 +25,22 @@ public class PlayerHandGridPane extends GridPane {
             imageView.setOnDragDetected(new MouseEventHandler(imageView));
             imageView.setOnDragDone(new DragEventHandler(imageView));
         }
+
+        blackImage = new Image("/edu/monash/images/piece-black.png");
+        whiteImage = new Image("/edu/monash/images/piece-white.png");
     }
+
+    void initState() {
+        // Set all ImageView instances to the initial image
+        for (int row = 0; row < getRowCount(); row++) {
+            for (int col = 0; col < getColumnCount(); col++) {
+                ImageView imageView = (ImageView) getChildren().get(col + row * getColumnCount());
+                Image image = pieceColour == PieceColour.BLACK ? blackImage : whiteImage;
+                imageView.setImage(image);
+            }
+        }
+    }
+
 
     private class MouseEventHandler implements EventHandler<MouseEvent> {
 

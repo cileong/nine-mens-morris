@@ -5,13 +5,12 @@ import edu.monash.game.player.Player;
 import java.util.List;
 
 public class Position {
-    private static int idCounter = 0;
     private final int id;
     private Position neighbourUp, neighbourDown, neighbourLeft, neighbourRight;
     private PieceColour occupiedBy;
 
-    public Position() {
-        this.id = idCounter++;
+    public Position(int id) {
+        this.id = id;
     }
 
     public int getId() {
