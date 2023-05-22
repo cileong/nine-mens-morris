@@ -81,4 +81,12 @@ public class Board {
                 .toList();
         return String.format("Board{positions=%s}", occupiedBy);
     }
+
+    public boolean hasNoValidMove() {
+        return positions.stream().allMatch(
+                position ->
+                        position.canPieceBePlaced(null) ||
+                        position.isInHorizontalMill() ||
+                        position.isInVerticalMill());
+    }
 }

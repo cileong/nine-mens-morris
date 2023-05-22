@@ -53,6 +53,17 @@ public class ViewController {
         }
     }
 
+    public void showDrawDialog() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Draw");
+        alert.setHeaderText(null);
+        alert.setContentText("No one won the game!");
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.OK) {
+            promptDialog("No valid moves left", null, "Game is over. Do you want to start a new game?", 0);
+        }
+    }
+
     private void promptDialog(String title, String header, String contentText, int id) {
         ButtonType btnYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType btnNo = new ButtonType("No", ButtonBar.ButtonData.NO);

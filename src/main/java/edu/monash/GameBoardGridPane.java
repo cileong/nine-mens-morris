@@ -88,6 +88,9 @@ public class GameBoardGridPane extends GridPane {
             if (game.getPlayer().hasLost() || game.getOpponent().hasLost()){
                 viewController.showGameWonDialog();
             }
+            else if (game.getBoard().hasNoValidMove()){
+                viewController.showDrawDialog();
+            }
 
             event.consume();
         }
