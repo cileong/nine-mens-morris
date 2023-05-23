@@ -49,7 +49,7 @@ public class ViewController {
         }
         alert.showAndWait();
         if (alert.getResult() == ButtonType.OK) {
-            promptDialog("Game won", null, "Game is over. Do you want to start a new game?", 0);
+            promptDialog("Game won", null, "Game is over. Do you want to start a new game?");
         }
     }
 
@@ -60,11 +60,11 @@ public class ViewController {
         alert.setContentText("No one won the game!");
         alert.showAndWait();
         if (alert.getResult() == ButtonType.OK) {
-            promptDialog("No valid moves left", null, "Game is over. Do you want to start a new game?", 0);
+            promptDialog("No valid moves left", null, "Game is over. Do you want to start a new game?");
         }
     }
 
-    private void promptDialog(String title, String header, String contentText, int id) {
+    private void promptDialog(String title, String header, String contentText) {
         ButtonType btnYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType btnNo = new ButtonType("No", ButtonBar.ButtonData.NO);
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -74,15 +74,13 @@ public class ViewController {
         alert.getButtonTypes().clear();
         alert.getButtonTypes().addAll(btnYes, btnNo);
         alert.showAndWait();
-        if (id == 0) {
-            if (alert.getResult() == btnYes) {
+        if (alert.getResult() == btnYes) {
                 resetView();
-            }
-        } else if (id == 1) {
-            if (alert.getResult() == btnYes) {
-                Platform.exit();
-            }
         }
+        else if (alert.getResult() == btnNo) {
+                Platform.exit();
+        }
+
     }
 }
 

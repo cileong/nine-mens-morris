@@ -16,8 +16,9 @@ public class PlaceAction implements Action {
 
     @Override
     public boolean isValid(Game game, Player player) {
-        if (player.hasFormedMill())
+        if (player.hasFormedMill()) {
             return false;
+        }
 
         Board board = game.getBoard();
         System.out.println("Move: " + move.getTo());
@@ -36,8 +37,10 @@ public class PlaceAction implements Action {
         Board board = game.getBoard();
         Position destination = board.getPosition(move.getTo());
 
-        if (destination.isInVerticalMill() || destination.isInHorizontalMill())
+        if (destination.isInVerticalMill() || destination.isInHorizontalMill()) {
+            System.out.println("Player " + game.getPlayer().getPieceColour() + " has formed a mill. Remove a piece from Player " + game.getOpponent().getPieceColour());
             game.getPlayer().setHasFormedMill(true);
+        }
 
         game.getPlayer().decrementPiecesOnHand();
         game.getPlayer().incrementPiecesOnBoard();
