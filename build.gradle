@@ -24,10 +24,16 @@ application {
 }
 
 javafx {
-    version = '20'
+    version = '20.0.1'
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': application.getMainClass()
+    }
 }
