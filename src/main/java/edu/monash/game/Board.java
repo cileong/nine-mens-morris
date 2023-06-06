@@ -23,16 +23,35 @@ public class Board {
 
     @JsonCreator
     public Board(@JsonProperty("positions") List<Position> positions) {
+        Position[][] rings = new Position[NUM_RINGS][NUM_POSITIONS_PER_RING];
+        for (Position position : positions) {
+            int ring = position.getId() / NUM_POSITIONS_PER_RING;
+            int positionInRing = position.getId() % NUM_POSITIONS_PER_RING;
+            rings[ring][positionInRing] = position;
+        }
+        linkPositionNeighbors(rings);
         this.positions = positions;
     }
 
     private List<Position> createBoardStructure() {
-        Position[][] rings = IntStream.range(0, NUM_RINGS)
+        Position[][] rings = createPositions();
+
+        linkPositionNeighbors(rings);
+
+        return Arrays.stream(rings)
+                .flatMap(Arrays::stream)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    private Position[][] createPositions() {
+        return IntStream.range(0, NUM_RINGS)
                 .mapToObj(y -> IntStream.range(0, NUM_POSITIONS_PER_RING)
-                        .mapToObj(x -> new Position((8*y)+x))
+                        .mapToObj(x -> new Position((8 * y) + x))
                         .toArray(Position[]::new))
                 .toArray(Position[][]::new);
+    }
 
+    private void linkPositionNeighbors(Position[][] rings) {
         for (int y = 0; y < NUM_RINGS; y++) {
             for (int x = 0; x < NUM_POSITIONS_PER_RING; x++) {
                 rings[y][x] = rings[y][x]
@@ -42,11 +61,8 @@ public class Board {
                         .withDownNeighbour(x % 2 == 1 ? rings[nextOfY(y)][x] : null);
             }
         }
-
-        return Arrays.stream(rings)
-                .flatMap(Arrays::stream)
-                .collect(Collectors.toCollection(ArrayList::new));
     }
+
 
     public List<Position> getPositions() {
         return positions;
