@@ -10,6 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.stage.Stage;
+import javafx.stage.FileChooser;
+import java.io.File;
 
 public class ViewController {
 
@@ -93,6 +96,23 @@ public class ViewController {
         else if (alert.getResult() == btnNo) {
                 Platform.exit();
         }
+    }
+
+    public void loadAction() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load game...");
+
+        Stage primaryStage = new Stage(); // You can replace this with your main stage.
+        File file = fileChooser.showOpenDialog(primaryStage);
+
+        if (file != null) {
+            String filePath = file.getPath();
+            System.out.println("Selected file: " + filePath);
+        }
+    }
+
+    public void saveAction() {
+
     }
 
     public void undoAction(){

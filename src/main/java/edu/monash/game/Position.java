@@ -75,6 +75,10 @@ public class Position {
         occupiedBy = pieceColour;
     }
 
+    public boolean isInMill() {
+        return isInHorizontalMill() || isInVerticalMill();
+    }
+
     @JsonIgnore
     public boolean isInHorizontalMill() {
         if (isHorizontalAnchor()) {

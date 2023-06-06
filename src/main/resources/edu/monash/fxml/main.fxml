@@ -15,12 +15,12 @@
                <KeyCodeCombination alt="UP" code="N" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
             </accelerator></MenuItem>
          <SeparatorMenuItem mnemonicParsing="false" />
-         <MenuItem mnemonicParsing="false" text="Open">
+         <MenuItem mnemonicParsing="false" onAction="#loadAction" text="Open">
             <accelerator>
                <KeyCodeCombination alt="UP" code="O" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
             </accelerator>
          </MenuItem>
-         <MenuItem mnemonicParsing="false" text="Save">
+         <MenuItem mnemonicParsing="false" onAction="#saveAction" text="Save">
             <accelerator>
                <KeyCodeCombination alt="UP" code="S" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
             </accelerator>

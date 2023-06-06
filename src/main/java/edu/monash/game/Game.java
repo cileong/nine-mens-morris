@@ -10,7 +10,6 @@ public class Game {
 
     private Board board;
     private Player player1, player2, currentPlayer;
-    private int turnCount;
     private Stack<Move> movesPlayed;
 
     public Game() {
@@ -46,22 +45,75 @@ public class Game {
         player2 = new Player(PieceColour.WHITE, PlacePhase::new);
         currentPlayer = player1;
 
-        turnCount = 0;
-
         movesPlayed = new Stack<>();
+    }
+
+    public void loadGameState(GameState gameState) {
+        // Reset the game.
+        initializeNewGame();
+
+        Stack<Move> moves = gameState.getMoves();
+        Move[] movesArray = moves.toArray(new Move[0]);
+
+        if (movesArray.length == 0)
+            return;
+
+        // Fast-forward the game to the last move.
+        for (Move move : movesArray) {
+            move.executeOn(board);
+            storePlayedMove(move);
+
+            Player player = getPlayer(move.pieceColour());
+
+            if (move.from() == null) {
+                player.decrementPiecesOnHand();
+                player.incrementPiecesOnBoard();
+            }
+            if (move.to() == null) {
+                player.decrementPiecesOnBoard();
+            }
+
+            // Perform phase transitioning.
+            getPlayer().attemptTransitionPhase();
+            getOpponent().attemptTransitionPhase();
+        }
+
+        Move lastMove = movesArray[movesArray.length - 1];
+        Player player = getPlayer(lastMove.pieceColour());
+
+        // Last move is remove
+        if (lastMove.to() == null)
+            currentPlayer = player;
+        // Last move is place or move
+        else {
+            Position destination = board.getPosition(lastMove.to());
+            player.setHasFormedMill(destination.isInMill());
+            currentPlayer = player;
+            if (!player.hasFormedMill())
+                switchActivePlayer();
+        }
+
+        movesPlayed = moves;
     }
 
     public Player getPlayer() {
         return currentPlayer;
     }
 
+    private Player getPlayer(PieceColour colour) {
+        return player1.getPieceColour() == colour ? player1 : player2;
+    }
+
     public Player getOpponent() {
         return currentPlayer.equals(player1) ? player2 : player1;
     }
 
+    private Player getOpponent(PieceColour colour) {
+        return player1.getPieceColour() == colour ? player2 : player1;
+    }
+
     public void switchActivePlayer() {
         currentPlayer = currentPlayer.equals(player1) ? player2 : player1;
-        turnCount++;
     }
 
     public Stack<Move> getMoves() {
