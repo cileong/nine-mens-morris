@@ -1,7 +1,9 @@
 package edu.monash;
 
 import edu.monash.game.Game;
+import edu.monash.game.GameState;
 import edu.monash.game.PieceColour;
+import edu.monash.game.Position;
 import edu.monash.game.actions.*;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -86,6 +88,22 @@ public class GameBoardGridPane extends GridPane {
             }
         }
         return isRemoveAction;
+    }
+
+    void updateView() {
+        initState();
+        for (Integer[] rows : boardMapping) {
+            for (Integer positionId : rows) {
+                Position position = game.getBoard().getPosition(positionId);
+                if (position != null) {
+                    ImageView imageView = getImageViewByPositionId(positionId);
+                    if (position.getPiece() != null) {
+                        Image image = position.getPiece() == PieceColour.BLACK ? blackImage : whiteImage;
+                        imageView.setImage(image);
+                    }
+                }
+            }
+        }
     }
 
     ImageView getImageViewByPositionId(int positionId) {

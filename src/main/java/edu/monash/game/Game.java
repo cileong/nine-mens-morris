@@ -100,7 +100,7 @@ public class Game {
         return currentPlayer;
     }
 
-    private Player getPlayer(PieceColour colour) {
+    public Player getPlayer(PieceColour colour) {
         return player1.getPieceColour() == colour ? player1 : player2;
     }
 

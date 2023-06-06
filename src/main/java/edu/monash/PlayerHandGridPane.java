@@ -1,7 +1,9 @@
 package edu.monash;
 
 import edu.monash.game.Game;
+import edu.monash.game.GameState;
 import edu.monash.game.PieceColour;
+import edu.monash.game.player.Player;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -54,6 +56,14 @@ public class PlayerHandGridPane extends GridPane {
                 isUndo = true;
             }
             row -= 1;
+        }
+    }
+
+    void updateView() {
+        initState();
+        for (int row = 0; row < 9 - game.getPlayer(pieceColour).getPiecesOnHand(); row++) {
+            ImageView imageView = (ImageView) getChildren().get(row);
+            imageView.setImage(null);
         }
     }
 

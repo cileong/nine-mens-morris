@@ -3,8 +3,10 @@ package edu.monash;
 import edu.monash.game.Game;
 import edu.monash.game.GameState;
 import edu.monash.game.PieceColour;
+import edu.monash.game.io.Deserializer;
 import edu.monash.game.io.JsonDeserializer;
 import edu.monash.game.io.JsonSerializer;
+import edu.monash.game.io.Serializer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -41,8 +43,6 @@ public class ViewController {
     }
 
     public void showGameWonDialog() {
-        JsonSerializer jsonSerializer = new JsonSerializer(game);
-        jsonSerializer.serialize("game.json");
         JsonDeserializer jsonDeserializer = new JsonDeserializer();
         GameState gameState = jsonDeserializer.deserialize("game.json");
         System.out.println(gameState.getBoard());
@@ -63,8 +63,6 @@ public class ViewController {
     }
 
     public void showDrawDialog() {
-        JsonSerializer jsonSerializer = new JsonSerializer(game);
-        jsonSerializer.serialize("game.json");
         JsonDeserializer jsonDeserializer = new JsonDeserializer();
         GameState gameState = jsonDeserializer.deserialize("game.json");
         System.out.println(gameState.getBoard());
@@ -102,20 +100,34 @@ public class ViewController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Load game...");
 
-        Stage primaryStage = new Stage(); // You can replace this with your main stage.
-        File file = fileChooser.showOpenDialog(primaryStage);
+        File file = fileChooser.showOpenDialog(new Stage());
 
         if (file != null) {
-            String filePath = file.getPath();
-            System.out.println("Selected file: " + filePath);
+            Deserializer jsonDeserializer = new JsonDeserializer();
+            GameState gameState = jsonDeserializer.deserialize(file.getPath());
+
+            game.loadGameState(gameState);
+            boardGrid.updateView();
+            blackGrid.updateView();
+            whiteGrid.updateView();
         }
     }
 
     public void saveAction() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save game...");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+        fileChooser.getExtensionFilters().add(extFilter);
 
+        File file = fileChooser.showSaveDialog(new Stage());
+
+        if (file != null) {
+            Serializer jsonSerializer = new JsonSerializer(game);
+            jsonSerializer.serialize(file.getPath());
+        }
     }
 
-    public void undoAction(){
+    public void undoAction() {
         boolean isRemoveAction = boardGrid.undo();
 
         if (!isRemoveAction && game.getPlayer().getPiecesOnHand() != 0) {
@@ -127,7 +139,7 @@ public class ViewController {
         }
     }
 
-    public void quitAction(){
+    public void quitAction() {
         Platform.exit();
     }
 }
