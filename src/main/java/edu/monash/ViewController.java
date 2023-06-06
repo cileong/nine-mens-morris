@@ -96,12 +96,14 @@ public class ViewController {
     }
 
     public void undoAction(){
-        boardGrid.undo();
-        //check if (game.getPlayer().getPhase() == PlacePhase())
-        if (game.getPlayer().getPieceColour() == PieceColour.BLACK) {
-            blackGrid.undo();
-        } else {
-            whiteGrid.undo();
+        boolean isRemoveAction = boardGrid.undo();
+
+        if (!isRemoveAction && game.getPlayer().getPiecesOnHand() != 0) {
+            if (game.getPlayer().getPieceColour() == PieceColour.BLACK) {
+                blackGrid.undo();
+            } else {
+                whiteGrid.undo();
+            }
         }
     }
 

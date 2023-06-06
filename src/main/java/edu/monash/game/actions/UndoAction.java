@@ -11,6 +11,8 @@ public class UndoAction implements Action {
     private Integer from;
     private Integer to;
 
+    private boolean isRemoveAction;
+
     public UndoAction(Game game) {
         Move lastMove = game.getPlayedMove().pop();
         game.switchActivePlayer();
@@ -28,9 +30,14 @@ public class UndoAction implements Action {
     public void executeOn(Game game) {
         move.executeOn(game.getBoard());
 
+        if (game.getOpponent().hasFormedMill()) {
+            game.switchActivePlayer();
+            game.getPlayer().setHasFormedMill(false);
+        }
         if (move.getFrom() ==  null) {
             game.getOpponent().incrementPiecesOnBoard();
             game.getPlayer().setHasFormedMill(true);
+            game.getBoard().getPosition(move.getTo()).setPiece(game.getOpponent().getPieceColour());
         } else if (move.getTo() ==  null) {
             game.getPlayer().decrementPiecesOnBoard();
             game.getPlayer().incrementPiecesOnHand();
@@ -47,4 +54,5 @@ public class UndoAction implements Action {
     public Integer getTo() {
         return to;
     }
+
 }
