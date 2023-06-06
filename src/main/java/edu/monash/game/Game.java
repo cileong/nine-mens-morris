@@ -68,10 +68,11 @@ public class Game {
             if (move.from() == null) {
                 player.decrementPiecesOnHand();
                 player.incrementPiecesOnBoard();
-                System.out.println(player.getPieceColour().toString() + " " + player.getPiecesOnHand() + " " + move.to());
+                System.out.println("FROM NULL: " + player.getPieceColour().toString() + " " + player.getPiecesOnHand() + " " + player.getPiecesOnBoard());
             }
             if (move.to() == null) {
-                player.decrementPiecesOnBoard();
+                getOpponent(move.pieceColour()).decrementPiecesOnBoard();
+                System.out.println("TO NULL: " + player.getPieceColour().toString() + " " + player.getPiecesOnHand() + " " + player.getPiecesOnBoard());
             }
 
             // Perform phase transitioning.
