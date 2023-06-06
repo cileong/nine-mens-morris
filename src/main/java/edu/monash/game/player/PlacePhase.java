@@ -14,8 +14,8 @@ public class PlacePhase implements PlayerPhase {
 
     @Override
     public boolean validate(Board board, Move move) {
-        Position source = board.getPosition(move.getFrom()),
-                destination = board.getPosition(move.getTo());
+        Position source = board.getPosition(move.from()),
+                destination = board.getPosition(move.to());
 
         return source == null && destination != null;
     }

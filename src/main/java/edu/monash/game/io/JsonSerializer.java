@@ -1,17 +1,18 @@
-package edu.monash.game.actions;
+package edu.monash.game.io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.monash.game.Game;
+import edu.monash.game.GameState;
 
 import java.io.File;
 import java.io.IOException;
 
-public class Serializer {
+public class JsonSerializer implements Serializer {
 
     private final GameState gameState;
 
-    public Serializer(Game game) {
+    public JsonSerializer(Game game) {
         this.gameState = new GameState(game.getBoard(), game.getMoves());
     }
 
@@ -24,7 +25,6 @@ public class Serializer {
             objectMapper.writeValue(file, gameState);
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("ERROR SAVING FILE.");
         }
     }
 

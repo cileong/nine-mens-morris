@@ -20,7 +20,7 @@ public class RemoveAction implements Action {
             return false;
 
         Board board = game.getBoard();
-        Position source = board.getPosition(move.getFrom());
+        Position source = board.getPosition(move.from());
         return source.canPieceBeRemoved(player);
     }
 

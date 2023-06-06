@@ -1,6 +1,8 @@
 package edu.monash.game;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.monash.game.player.Player;
 
 public class Position {
@@ -10,6 +12,13 @@ public class Position {
 
     public Position(int id) {
         this.id = id;
+    }
+
+    @JsonCreator
+    public Position(@JsonProperty("id") int id,
+                    @JsonProperty("piece") PieceColour occupiedBy) {
+        this.id = id;
+        this.occupiedBy = occupiedBy;
     }
 
     public int getId() {

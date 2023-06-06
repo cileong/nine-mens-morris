@@ -20,8 +20,8 @@ public class MoveAction implements Action {
             return false;
 
         Board board = game.getBoard();
-        Position source = board.getPosition(move.getFrom());
-        Position destination = board.getPosition(move.getTo());
+        Position source = board.getPosition(move.from());
+        Position destination = board.getPosition(move.to());
 
         return player.canPerformMove(board, move) &&
                 source.canPieceBeMoved(player) &&
@@ -35,7 +35,7 @@ public class MoveAction implements Action {
 
         // Test whether the player has formed a mill.
         Board board = game.getBoard();
-        Position destination = board.getPosition(move.getTo());
+        Position destination = board.getPosition(move.to());
 
         if (destination.isInVerticalMill() || destination.isInHorizontalMill())
             game.getPlayer().setHasFormedMill(true);

@@ -1,16 +1,18 @@
-package edu.monash.game.actions;
+package edu.monash.game;
 
-import edu.monash.game.Board;
-import edu.monash.game.Move;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Stack;
 
-class GameState {
+public class GameState {
 
     private Board board;
     private Stack<Move> moves;
 
-    GameState(Board board, Stack<Move> moves) {
+    @JsonCreator
+    public GameState(@JsonProperty("board") Board board,
+                     @JsonProperty("moves") Stack<Move> moves) {
         this.board = board;
         this.moves = moves;
     }

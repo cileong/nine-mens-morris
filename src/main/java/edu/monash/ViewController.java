@@ -1,19 +1,15 @@
 package edu.monash;
 
 import edu.monash.game.Game;
+import edu.monash.game.GameState;
 import edu.monash.game.PieceColour;
-import edu.monash.game.actions.Serializer;
-import edu.monash.game.player.PlacePhase;
-import edu.monash.game.player.SlidePhase;
+import edu.monash.game.io.JsonDeserializer;
+import edu.monash.game.io.JsonSerializer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.awt.*;
 
 public class ViewController {
 
@@ -42,8 +38,12 @@ public class ViewController {
     }
 
     public void showGameWonDialog() {
-        Serializer serializer = new Serializer(game);
-        serializer.serialize("game.json");
+        JsonSerializer jsonSerializer = new JsonSerializer(game);
+        jsonSerializer.serialize("game.json");
+        JsonDeserializer jsonDeserializer = new JsonDeserializer();
+        GameState gameState = jsonDeserializer.deserialize("game.json");
+        System.out.println(gameState.getBoard());
+        System.out.println(gameState.getMoves());
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game won");
@@ -60,8 +60,13 @@ public class ViewController {
     }
 
     public void showDrawDialog() {
-        Serializer serializer = new Serializer(game);
-        serializer.serialize("game.json");
+        JsonSerializer jsonSerializer = new JsonSerializer(game);
+        jsonSerializer.serialize("game.json");
+        JsonDeserializer jsonDeserializer = new JsonDeserializer();
+        GameState gameState = jsonDeserializer.deserialize("game.json");
+        System.out.println(gameState.getBoard());
+        System.out.println(gameState.getMoves());
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Draw");
         alert.setHeaderText(null);

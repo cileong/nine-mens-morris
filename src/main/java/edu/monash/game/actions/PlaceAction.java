@@ -21,8 +21,8 @@ public class PlaceAction implements Action {
         }
 
         Board board = game.getBoard();
-        System.out.println("Move: " + move.getTo());
-        Position destination = board.getPosition(move.getTo());
+        System.out.println("Move: " + move.to());
+        Position destination = board.getPosition(move.to());
         System.out.println("Destination: " + destination);
 
         return destination.canPieceBePlaced(player);
@@ -35,7 +35,7 @@ public class PlaceAction implements Action {
 
         // Test whether the player has formed a mill.
         Board board = game.getBoard();
-        Position destination = board.getPosition(move.getTo());
+        Position destination = board.getPosition(move.to());
 
         if (destination.isInVerticalMill() || destination.isInHorizontalMill()) {
             game.getPlayer().setHasFormedMill(true);

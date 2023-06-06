@@ -1,5 +1,8 @@
 package edu.monash.game;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +19,11 @@ public class Board {
 
     public Board() {
         positions = createBoardStructure();
+    }
+
+    @JsonCreator
+    public Board(@JsonProperty("positions") List<Position> positions) {
+        this.positions = positions;
     }
 
     private List<Position> createBoardStructure() {
