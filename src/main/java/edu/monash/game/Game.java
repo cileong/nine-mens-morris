@@ -68,6 +68,7 @@ public class Game {
             if (move.from() == null) {
                 player.decrementPiecesOnHand();
                 player.incrementPiecesOnBoard();
+                System.out.println(player.getPieceColour().toString() + " " + player.getPiecesOnHand() + " " + move.to());
             }
             if (move.to() == null) {
                 player.decrementPiecesOnBoard();
@@ -94,6 +95,9 @@ public class Game {
         }
 
         movesPlayed = moves;
+
+        System.out.println(getPlayer().getPieceColour().toString() + " " + getPlayer().getPiecesOnHand() + " " + getPlayer().getPiecesOnBoard() + " " + getPlayer().getPhase());
+        System.out.println(getOpponent().getPieceColour().toString() + " " + getOpponent().getPiecesOnHand() + " " + getOpponent().getPiecesOnBoard() + " " + getOpponent().getPhase());
     }
 
     public Player getPlayer() {
