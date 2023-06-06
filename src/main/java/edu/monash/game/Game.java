@@ -35,6 +35,10 @@ public class Game {
             movesPlayed.push(move);
     }
 
+    public Stack<Move> getPlayedMove() {
+        return movesPlayed;
+    }
+
     public void initializeNewGame() {
         board = new Board();
 

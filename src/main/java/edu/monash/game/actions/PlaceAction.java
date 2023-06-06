@@ -38,7 +38,6 @@ public class PlaceAction implements Action {
         Position destination = board.getPosition(move.getTo());
 
         if (destination.isInVerticalMill() || destination.isInHorizontalMill()) {
-            System.out.println("Player " + game.getPlayer().getPieceColour() + " has formed a mill. Remove a piece from Player " + game.getOpponent().getPieceColour());
             game.getPlayer().setHasFormedMill(true);
         }
 

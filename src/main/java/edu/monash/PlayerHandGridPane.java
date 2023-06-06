@@ -41,6 +41,21 @@ public class PlayerHandGridPane extends GridPane {
         }
     }
 
+    void undo() {
+        boolean isUndo = false;
+        int row = getRowCount() - 1;
+        int col = getColumnCount() - 1 ;
+
+        while (!isUndo && row >= 0) {
+            ImageView imageView = (ImageView) getChildren().get(col + row * getColumnCount());
+            if (imageView.getImage() == null) {
+                Image image = pieceColour == PieceColour.BLACK ? blackImage : whiteImage;
+                imageView.setImage(image);
+                isUndo = true;
+            }
+            row -= 1;
+        }
+    }
 
     private class MouseEventHandler implements EventHandler<MouseEvent> {
 

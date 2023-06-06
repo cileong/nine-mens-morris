@@ -22,6 +22,8 @@ class JumpPhase implements PlayerPhase {
         // To terminal state. Player has lost.
         if (player.getPiecesOnBoard() < 3)
             player.setPhase(unused -> null);
+        else if (player.getPiecesOnBoard() > 3)
+            player.setPhase(SlidePhase::new);
     }
 
 }
