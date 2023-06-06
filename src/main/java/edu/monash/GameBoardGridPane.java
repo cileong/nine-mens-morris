@@ -139,6 +139,10 @@ public class GameBoardGridPane extends GridPane {
                     getRowIndex(imageView)
             );
 
+            if (game.getBoard().hasNoValidMove()){
+                viewController.showDrawDialog();
+            }
+
             Action action = new RemoveAction(game.getPlayer(), fromId);
             boolean executed = game.execute(action);
             if (executed)
@@ -146,9 +150,6 @@ public class GameBoardGridPane extends GridPane {
 
             if (game.getPlayer().hasLost() || game.getOpponent().hasLost()){
                 viewController.showGameWonDialog();
-            }
-            else if (game.getBoard().hasNoValidMove() && game.getPlayer().getPiecesOnHand() == 0){
-                viewController.showDrawDialog();
             }
 
             event.consume();
