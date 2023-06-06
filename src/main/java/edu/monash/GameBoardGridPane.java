@@ -63,10 +63,11 @@ public class GameBoardGridPane extends GridPane {
         }
     }
 
-    void undo(){
+    boolean undo(){
         UndoAction action = new UndoAction(game);
         boolean executed = game.execute(action);
 
+        boolean isRemoveAction = false;
         if (executed) {
             if (action.getFrom() != null) {
                 ImageView removeImageView = getImageViewByPositionId(action.getFrom());
@@ -81,8 +82,10 @@ public class GameBoardGridPane extends GridPane {
                 ImageView addImageView = getImageViewByPositionId(action.getTo());
                 Image image = game.getOpponent().getPieceColour() == PieceColour.BLACK ? blackImage : whiteImage;
                 addImageView.setImage(image);
+                isRemoveAction = true;
             }
         }
+        return isRemoveAction;
     }
 
     ImageView getImageViewByPositionId(int positionId) {
@@ -126,7 +129,7 @@ public class GameBoardGridPane extends GridPane {
             if (game.getPlayer().hasLost() || game.getOpponent().hasLost()){
                 viewController.showGameWonDialog();
             }
-            else if (game.getBoard().hasNoValidMove()){
+            else if (game.getBoard().hasNoValidMove() && game.getPlayer().getPiecesOnHand() == 0){
                 viewController.showDrawDialog();
             }
 

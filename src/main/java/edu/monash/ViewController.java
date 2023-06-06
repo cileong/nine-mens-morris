@@ -2,17 +2,11 @@ package edu.monash;
 
 import edu.monash.game.Game;
 import edu.monash.game.PieceColour;
-import edu.monash.game.player.PlacePhase;
-import edu.monash.game.player.SlidePhase;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.awt.*;
 
 public class ViewController {
 
@@ -85,12 +79,14 @@ public class ViewController {
     }
 
     public void undoAction(){
-        boardGrid.undo();
-        //check if (game.getPlayer().getPhase() == PlacePhase())
-        if (game.getPlayer().getPieceColour() == PieceColour.BLACK) {
-            blackGrid.undo();
-        } else {
-            whiteGrid.undo();
+        boolean isRemoveAction = boardGrid.undo();
+
+        if (!isRemoveAction && game.getPlayer().getPiecesOnHand() != 0) {
+            if (game.getPlayer().getPieceColour() == PieceColour.BLACK) {
+                blackGrid.undo();
+            } else {
+                whiteGrid.undo();
+            }
         }
     }
 
