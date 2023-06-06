@@ -3,14 +3,14 @@
     "positions" : [ {
       "id" : 0,
       "piece" : "BLACK",
-      "inMill" : false
+      "inMill" : true
     }, {
       "id" : 1,
       "piece" : null,
       "inMill" : true
     }, {
       "id" : 2,
-      "piece" : null,
+      "piece" : "WHITE",
       "inMill" : false
     }, {
       "id" : 3,
@@ -18,20 +18,20 @@
       "inMill" : false
     }, {
       "id" : 4,
-      "piece" : "BLACK",
+      "piece" : null,
       "inMill" : false
     }, {
       "id" : 5,
       "piece" : null,
-      "inMill" : false
+      "inMill" : true
     }, {
       "id" : 6,
       "piece" : "BLACK",
-      "inMill" : false
+      "inMill" : true
     }, {
       "id" : 7,
-      "piece" : null,
-      "inMill" : false
+      "piece" : "BLACK",
+      "inMill" : true
     }, {
       "id" : 8,
       "piece" : "BLACK",
@@ -42,7 +42,7 @@
       "inMill" : true
     }, {
       "id" : 10,
-      "piece" : "BLACK",
+      "piece" : "WHITE",
       "inMill" : false
     }, {
       "id" : 11,
@@ -50,12 +50,12 @@
       "inMill" : false
     }, {
       "id" : 12,
-      "piece" : "BLACK",
+      "piece" : null,
       "inMill" : false
     }, {
       "id" : 13,
-      "piece" : "WHITE",
-      "inMill" : false
+      "piece" : null,
+      "inMill" : true
     }, {
       "id" : 14,
       "piece" : "BLACK",
@@ -66,7 +66,7 @@
       "inMill" : true
     }, {
       "id" : 16,
-      "piece" : null,
+      "piece" : "BLACK",
       "inMill" : true
     }, {
       "id" : 17,
@@ -87,15 +87,15 @@
     }, {
       "id" : 21,
       "piece" : null,
-      "inMill" : false
+      "inMill" : true
     }, {
       "id" : 22,
       "piece" : "BLACK",
-      "inMill" : false
+      "inMill" : true
     }, {
       "id" : 23,
-      "piece" : null,
-      "inMill" : false
+      "piece" : "BLACK",
+      "inMill" : true
     } ]
   },
   "moves" : [ {
@@ -113,14 +113,14 @@
   }, {
     "pieceColour" : "WHITE",
     "from" : null,
-    "to" : 3
+    "to" : 10
   }, {
     "pieceColour" : "BLACK",
     "from" : null,
     "to" : 6
   }, {
     "pieceColour" : "BLACK",
-    "from" : 3,
+    "from" : 10,
     "to" : null
   }, {
     "pieceColour" : "WHITE",
@@ -129,11 +129,23 @@
   }, {
     "pieceColour" : "BLACK",
     "from" : null,
-    "to" : 4
+    "to" : 15
   }, {
     "pieceColour" : "WHITE",
     "from" : null,
+    "to" : 10
+  }, {
+    "pieceColour" : "BLACK",
+    "from" : null,
     "to" : 23
+  }, {
+    "pieceColour" : "BLACK",
+    "from" : 3,
+    "to" : null
+  }, {
+    "pieceColour" : "WHITE",
+    "from" : null,
+    "to" : 3
   }, {
     "pieceColour" : "BLACK",
     "from" : null,
@@ -147,100 +159,28 @@
     "from" : null,
     "to" : 14
   }, {
-    "pieceColour" : "WHITE",
-    "from" : null,
-    "to" : 1
-  }, {
     "pieceColour" : "BLACK",
-    "from" : null,
-    "to" : 9
+    "from" : 11,
+    "to" : null
   }, {
     "pieceColour" : "WHITE",
     "from" : null,
-    "to" : 10
+    "to" : 11
   }, {
     "pieceColour" : "BLACK",
     "from" : null,
-    "to" : 12
-  }, {
-    "pieceColour" : "WHITE",
-    "from" : null,
-    "to" : 5
-  }, {
-    "pieceColour" : "BLACK",
-    "from" : null,
-    "to" : 21
+    "to" : 22
   }, {
     "pieceColour" : "WHITE",
     "from" : null,
     "to" : 18
   }, {
     "pieceColour" : "BLACK",
-    "from" : 7,
-    "to" : 15
+    "from" : null,
+    "to" : 16
   }, {
     "pieceColour" : "BLACK",
     "from" : 18,
     "to" : null
-  }, {
-    "pieceColour" : "WHITE",
-    "from" : 23,
-    "to" : 16
-  }, {
-    "pieceColour" : "BLACK",
-    "from" : 15,
-    "to" : 7
-  }, {
-    "pieceColour" : "BLACK",
-    "from" : 10,
-    "to" : null
-  }, {
-    "pieceColour" : "BLACK",
-    "from" : 9,
-    "to" : 10
-  }, {
-    "pieceColour" : "WHITE",
-    "from" : 1,
-    "to" : 9
-  }, {
-    "pieceColour" : "BLACK",
-    "from" : 7,
-    "to" : 15
-  }, {
-    "pieceColour" : "BLACK",
-    "from" : 9,
-    "to" : null
-  }, {
-    "pieceColour" : "WHITE",
-    "from" : 16,
-    "to" : 17
-  }, {
-    "pieceColour" : "BLACK",
-    "from" : 15,
-    "to" : 7
-  }, {
-    "pieceColour" : "BLACK",
-    "from" : 17,
-    "to" : null
-  }, {
-    "pieceColour" : "WHITE",
-    "from" : 2,
-    "to" : 1
-  }, {
-    "pieceColour" : "BLACK",
-    "from" : 7,
-    "to" : 15
-  }, {
-    "pieceColour" : "BLACK",
-    "from" : 1,
-    "to" : null
-  }, {
-    "pieceColour" : "WHITE",
-    "from" : 5,
-    "to" : 13
-  }, {
-    "pieceColour" : "BLACK",
-    "from" : 21,
-    "to" : 22
   } ]
 }
