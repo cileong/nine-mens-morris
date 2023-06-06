@@ -1,8 +1,7 @@
 package edu.monash.game;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.monash.game.player.Player;
-
-import java.util.List;
 
 public class Position {
     private final int id;
@@ -67,6 +66,7 @@ public class Position {
         occupiedBy = pieceColour;
     }
 
+    @JsonIgnore
     public boolean isInHorizontalMill() {
         if (isHorizontalAnchor()) {
             return neighbourLeft.occupiedBy == occupiedBy &&
@@ -77,6 +77,7 @@ public class Position {
         }
     }
 
+    @JsonIgnore
     public boolean isInVerticalMill() {
         if (isVerticalAnchor()) {
             return neighbourUp.occupiedBy == occupiedBy &&

@@ -2,6 +2,7 @@ package edu.monash;
 
 import edu.monash.game.Game;
 import edu.monash.game.PieceColour;
+import edu.monash.game.actions.Serializer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -39,6 +40,9 @@ public class ViewController {
     }
 
     public void showGameWonDialog() {
+        Serializer serializer = new Serializer(game);
+        serializer.serialize("game.json");
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game won");
         alert.setHeaderText(null);
@@ -54,6 +58,8 @@ public class ViewController {
     }
 
     public void showDrawDialog() {
+        Serializer serializer = new Serializer(game);
+        serializer.serialize("game.json");
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Draw");
         alert.setHeaderText(null);

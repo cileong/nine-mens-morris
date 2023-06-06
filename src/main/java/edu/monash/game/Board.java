@@ -40,6 +40,9 @@ public class Board {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public List<Position> getPositions() {
+        return positions;
+    }
 
     public Position getPosition(Integer id) {
         if (id == null)

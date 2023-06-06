@@ -60,4 +60,8 @@ public class Game {
         turnCount++;
     }
 
+    public Stack<Move> getMoves() {
+        return movesPlayed;
+    }
+
 }

@@ -1,16 +1,9 @@
 package edu.monash;
 
 import edu.monash.game.Game;
-import edu.monash.game.actions.Action;
-import edu.monash.game.actions.MoveAction;
-import edu.monash.game.actions.PlaceAction;
-import edu.monash.game.actions.RemoveAction;
-import javafx.application.Platform;
+import edu.monash.game.actions.*;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
