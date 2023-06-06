@@ -26,6 +26,8 @@ public class SlidePhase implements PlayerPhase {
     public void transition() {
         if (player.getPiecesOnBoard() == 3)
             player.setPhase(JumpPhase::new);
+        else if (player.getPiecesOnHand() != 0)
+            player.setPhase(PlacePhase::new);
     }
 
 }

@@ -1,18 +1,50 @@
 package edu.monash.game.actions;
 
+import edu.monash.game.Board;
 import edu.monash.game.Game;
+import edu.monash.game.Move;
+import edu.monash.game.Position;
 import edu.monash.game.player.Player;
 
 public class UndoAction implements Action {
+    private final Move move;
+    private Integer from;
+    private Integer to;
+
+    public UndoAction(Game game) {
+        Move lastMove = game.getPlayedMove().pop();
+        game.switchActivePlayer();
+        this.from = lastMove.getTo();
+        this.to = lastMove.getFrom();
+        this.move = new Move(game.getPlayer().getPieceColour(), this.from, this.to);
+    }
 
     @Override
     public boolean isValid(Game game, Player player) {
-        return false;
+        return true;
     }
 
     @Override
     public void executeOn(Game game) {
-        throw new UnsupportedOperationException("Not yet implemented.");
+        move.executeOn(game.getBoard());
+
+        if (move.getFrom() ==  null) {
+            game.getOpponent().incrementPiecesOnBoard();
+            game.getPlayer().setHasFormedMill(true);
+        } else if (move.getTo() ==  null) {
+            game.getPlayer().decrementPiecesOnBoard();
+            game.getPlayer().incrementPiecesOnHand();
+        }
+
+        game.getPlayer().attemptTransitionPhase();
+        game.getOpponent().attemptTransitionPhase();
     }
 
+    public Integer getFrom() {
+        return from;
+    }
+
+    public Integer getTo() {
+        return to;
+    }
 }

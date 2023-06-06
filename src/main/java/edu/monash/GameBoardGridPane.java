@@ -1,16 +1,15 @@
 package edu.monash;
 
 import edu.monash.game.Game;
-import edu.monash.game.actions.Action;
-import edu.monash.game.actions.MoveAction;
-import edu.monash.game.actions.PlaceAction;
-import edu.monash.game.actions.RemoveAction;
+import edu.monash.game.PieceColour;
+import edu.monash.game.actions.*;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
@@ -18,7 +17,8 @@ import javafx.scene.layout.GridPane;
 public class GameBoardGridPane extends GridPane {
 
     private Game game;
-
+    private Image blackImage;
+    private Image whiteImage;
     private static final Integer[][] boardMapping = {
             {0, null, null, 1, null, null, 2},
             {null, 8, null, 9, null, 10, null},
@@ -44,7 +44,8 @@ public class GameBoardGridPane extends GridPane {
             imageView.setOnDragDropped(dragEventHandler);
             imageView.setOnDragDone(dragEventHandler);
         }
-
+        blackImage = new Image("/edu/monash/images/piece-black.png");
+        whiteImage = new Image("/edu/monash/images/piece-white.png");
     }
 
     static Integer getPositionId(Integer x, Integer y) {
@@ -60,6 +61,43 @@ public class GameBoardGridPane extends GridPane {
             ImageView imageView = (ImageView) node;
             imageView.setImage(null);
         }
+    }
+
+    void undo(){
+        UndoAction action = new UndoAction(game);
+        boolean executed = game.execute(action);
+
+        if (executed) {
+            if (action.getFrom() != null) {
+                ImageView removeImageView = getImageViewByPositionId(action.getFrom());
+                Image image = removeImageView.getImage();
+                removeImageView.setImage(null);
+
+                if (action.getTo() != null) {
+                    ImageView addImageView = getImageViewByPositionId(action.getTo());
+                    addImageView.setImage(image);
+                }
+            } else {
+                ImageView addImageView = getImageViewByPositionId(action.getTo());
+                Image image = game.getOpponent().getPieceColour() == PieceColour.BLACK ? blackImage : whiteImage;
+                addImageView.setImage(image);
+            }
+        }
+    }
+
+    ImageView getImageViewByPositionId(int positionId) {
+        for (Node node : getChildren()) {
+            if (node instanceof ImageView) {
+                ImageView imageView = (ImageView) node;
+                Integer x = GridPane.getColumnIndex(imageView);
+                Integer y = GridPane.getRowIndex(imageView);
+
+                if (x != null && y != null && getPositionId(x, y) == positionId) {
+                    return imageView;
+                }
+            }
+        }
+        return null; // ImageView not found for the given position ID
     }
 
     private record MouseEventHandler(Game game, ImageView imageView, ViewController viewController) implements EventHandler<MouseEvent> {

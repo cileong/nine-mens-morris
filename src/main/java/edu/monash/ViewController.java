@@ -2,6 +2,8 @@ package edu.monash;
 
 import edu.monash.game.Game;
 import edu.monash.game.PieceColour;
+import edu.monash.game.player.PlacePhase;
+import edu.monash.game.player.SlidePhase;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -31,7 +33,7 @@ public class ViewController {
         whiteGrid.initialize(game, PieceColour.WHITE);
     }
 
-    void resetView(){
+    public void resetView(){
         blackGrid.initState();
         whiteGrid.initState();
         boardGrid.initState();
@@ -80,7 +82,20 @@ public class ViewController {
         else if (alert.getResult() == btnNo) {
                 Platform.exit();
         }
+    }
 
+    public void undoAction(){
+        boardGrid.undo();
+        //check if (game.getPlayer().getPhase() == PlacePhase())
+        if (game.getPlayer().getPieceColour() == PieceColour.BLACK) {
+            blackGrid.undo();
+        } else {
+            whiteGrid.undo();
+        }
+    }
+
+    public void quitAction(){
+        Platform.exit();
     }
 }
 
