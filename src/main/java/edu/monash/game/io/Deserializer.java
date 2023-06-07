@@ -1,6 +1,5 @@
 package edu.monash.game.io;
 
-import edu.monash.game.Game;
 import edu.monash.game.GameState;
 
 /**

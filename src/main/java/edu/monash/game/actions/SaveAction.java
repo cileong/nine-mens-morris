@@ -1,8 +1,7 @@
 package edu.monash.game.actions;
 
-import edu.monash.game.*;
+import edu.monash.game.Game;
 import edu.monash.game.io.Serializer;
-import edu.monash.game.io.SerializerFactory;
 import edu.monash.game.player.Player;
 
 /**

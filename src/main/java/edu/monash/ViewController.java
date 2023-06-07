@@ -1,9 +1,7 @@
 package edu.monash;
 
 import edu.monash.game.Game;
-import edu.monash.game.GameState;
 import edu.monash.game.PieceColour;
-import edu.monash.game.actions.Action;
 import edu.monash.game.actions.LoadAction;
 import edu.monash.game.actions.SaveAction;
 import edu.monash.game.io.*;
@@ -12,8 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.io.File;
 
 public class ViewController {

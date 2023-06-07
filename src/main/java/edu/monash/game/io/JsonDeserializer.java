@@ -1,7 +1,6 @@
 package edu.monash.game.io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.monash.game.Game;
 import edu.monash.game.GameState;
 
 import java.io.File;

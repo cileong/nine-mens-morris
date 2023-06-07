@@ -1,16 +1,11 @@
 package edu.monash;
 
 import edu.monash.game.Game;
-import edu.monash.game.GameState;
 import edu.monash.game.PieceColour;
 import edu.monash.game.Position;
 import edu.monash.game.actions.*;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;

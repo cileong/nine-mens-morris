@@ -1,9 +1,7 @@
 package edu.monash;
 
 import edu.monash.game.Game;
-import edu.monash.game.GameState;
 import edu.monash.game.PieceColour;
-import edu.monash.game.player.Player;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
