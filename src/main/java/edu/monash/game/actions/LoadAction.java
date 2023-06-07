@@ -1,12 +1,22 @@
 package edu.monash.game.actions;
 
 import edu.monash.game.Game;
+import edu.monash.game.GameState;
+import edu.monash.game.io.Deserializer;
 import edu.monash.game.player.Player;
 
 /**
  * An action that loads a game state.
  */
 public class LoadAction implements Action {
+
+    private final Deserializer deserializer;
+    private final String filepath;
+
+    public LoadAction(Deserializer deserializer, String filepath) {
+        this.deserializer = deserializer;
+        this.filepath = filepath;
+    }
 
     /**
      * Checks whether the load action is valid.
@@ -27,7 +37,8 @@ public class LoadAction implements Action {
      */
     @Override
     public void executeOn(Game game) {
-        throw new UnsupportedOperationException("Not yet implemented.");
+        GameState gameState = deserializer.deserialize(filepath);
+        game.loadGameState(gameState);
     }
 
 }

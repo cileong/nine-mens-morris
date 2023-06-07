@@ -1,11 +1,14 @@
 package edu.monash.game.io;
 
+import edu.monash.game.Game;
 import edu.monash.game.GameState;
 
 /**
  * An interface for deserializing game states.
  */
 public interface Deserializer {
+
+    String getSupportedFileExtension();
 
     /**
      * Deserializes a game state from a file.

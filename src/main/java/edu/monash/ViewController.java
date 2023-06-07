@@ -4,6 +4,7 @@ import edu.monash.game.Game;
 import edu.monash.game.GameState;
 import edu.monash.game.PieceColour;
 import edu.monash.game.actions.Action;
+import edu.monash.game.actions.LoadAction;
 import edu.monash.game.actions.SaveAction;
 import edu.monash.game.io.*;
 import javafx.application.Platform;
@@ -26,6 +27,7 @@ public class ViewController {
     private Game game;
 
     private SerializerFactory serializerFactory;
+    private DeserializerFactory deserializerFactory;
 
     @FXML
     private void initialize() {
@@ -37,6 +39,9 @@ public class ViewController {
 
         serializerFactory = new SerializerFactory();
         serializerFactory.registerSerializer(new JsonSerializer());
+
+        deserializerFactory = new DeserializerFactory();
+        deserializerFactory.registerDeserializer(new JsonDeserializer());
     }
 
     public void resetView(){
@@ -97,10 +102,9 @@ public class ViewController {
         File file = fileChooser.showOpenDialog(new Stage());
 
         if (file != null) {
-            Deserializer jsonDeserializer = new JsonDeserializer();
-            GameState gameState = jsonDeserializer.deserialize(file.getPath());
+            Deserializer deserializer = deserializerFactory.getDeserializerFor(file.getPath());
+            game.execute(new LoadAction(deserializer, file.getPath()));
 
-            game.loadGameState(gameState);
             boardGrid.updateView();
             blackGrid.updateView();
             whiteGrid.updateView();

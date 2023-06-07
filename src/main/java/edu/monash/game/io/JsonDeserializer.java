@@ -1,6 +1,7 @@
 package edu.monash.game.io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.monash.game.Game;
 import edu.monash.game.GameState;
 
 import java.io.File;
@@ -10,6 +11,11 @@ import java.io.IOException;
  * A deserializer for JSON files.
  */
 public class JsonDeserializer implements Deserializer {
+
+    @Override
+    public String getSupportedFileExtension() {
+        return "json";
+    }
 
     /**
      * Deserializes a game state from a JSON file.
@@ -23,6 +29,7 @@ public class JsonDeserializer implements Deserializer {
         ObjectMapper objectMapper = new ObjectMapper();
         // Create a game state object.
         GameState gameState = null;
+
         // Retrieve the file and deserialize it.
         try {
             File file = new File(filepath);
