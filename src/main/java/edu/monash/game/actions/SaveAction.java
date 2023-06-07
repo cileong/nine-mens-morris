@@ -1,12 +1,22 @@
 package edu.monash.game.actions;
 
 import edu.monash.game.*;
+import edu.monash.game.io.Serializer;
+import edu.monash.game.io.SerializerFactory;
 import edu.monash.game.player.Player;
 
 /**
  * An action that saves the current game state.
  */
 public class SaveAction implements Action {
+
+    private final Serializer serializer;
+    private final String filepath;
+
+    public SaveAction(Serializer serializer, String filepath) {
+        this.serializer = serializer;
+        this.filepath = filepath;
+    }
 
     /**
      * Checks whether the save action is valid.
@@ -27,7 +37,7 @@ public class SaveAction implements Action {
      */
     @Override
     public void executeOn(Game game) {
-        throw new UnsupportedOperationException("Not yet implemented.");
+        serializer.serialize(game, filepath);
     }
 
 }

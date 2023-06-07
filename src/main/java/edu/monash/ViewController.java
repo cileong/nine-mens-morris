@@ -3,6 +3,8 @@ package edu.monash;
 import edu.monash.game.Game;
 import edu.monash.game.GameState;
 import edu.monash.game.PieceColour;
+import edu.monash.game.actions.Action;
+import edu.monash.game.actions.SaveAction;
 import edu.monash.game.io.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -114,8 +116,8 @@ public class ViewController {
         File file = fileChooser.showSaveDialog(new Stage());
 
         if (file != null) {
-            Serializer jsonSerializer = new JsonSerializer();
-            jsonSerializer.serialize(game, file.getPath());
+            Serializer serializer = serializerFactory.getSerializerFor(file.getPath());
+            game.execute(new SaveAction(serializer, file.getPath()));
         }
     }
 
