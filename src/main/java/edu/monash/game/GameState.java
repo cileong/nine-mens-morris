@@ -9,7 +9,6 @@ import java.util.Stack;
 /**
  * A class representing the state of a game.
  */
-@JsonIgnoreProperties(value = { "board" }, allowGetters = true)
 public class GameState {
     private Board board;
     private Stack<Move> moves;

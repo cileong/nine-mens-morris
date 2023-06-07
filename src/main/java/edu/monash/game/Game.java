@@ -93,17 +93,14 @@ public class Game {
         // Reset the game.
         initializeNewGame();
 
-        Stack<Move> moves = gameState.getMoves();
-        Move[] movesArray = moves.toArray(new Move[0]);
+        board = gameState.getBoard();
+        movesPlayed = gameState.getMoves();
 
-        if (movesArray.length == 0)
+        if (movesPlayed.size() == 0)
             return;
 
         // Fast-forward the game to the last move.
-        for (Move move : movesArray) {
-            move.executeOn(board);
-            storePlayedMove(move);
-
+        for (Move move : movesPlayed.toArray(new Move[0])) {
             Player player = getPlayer(move.pieceColour());
 
             if (move.from() == null) {
@@ -119,13 +116,11 @@ public class Game {
             getOpponent().attemptTransitionPhase();
         }
 
-        Move lastMove = movesArray[movesArray.length - 1];
+        Move lastMove = movesPlayed.peek();
         Player player = getPlayer(lastMove.pieceColour());
 
-        // Last move is remove
         if (lastMove.to() == null)
-            currentPlayer = player;
-        // Last move is place or move
+            currentPlayer = getOpponent(lastMove.pieceColour());
         else {
             Position destination = board.getPosition(lastMove.to());
             player.setHasFormedMill(destination.isInMill());
@@ -133,8 +128,6 @@ public class Game {
             if (!player.hasFormedMill())
                 switchActivePlayer();
         }
-
-        movesPlayed = moves;
     }
 
     /**
