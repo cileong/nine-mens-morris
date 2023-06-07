@@ -97,13 +97,17 @@ public class GameBoardGridPane extends GridPane {
                 Position position = game.getBoard().getPosition(positionId);
                 if (position != null) {
                     ImageView imageView = getImageViewByPositionId(positionId);
-                    if (position.getPiece() != null) {
-                        Image image = position.getPiece() == PieceColour.BLACK ? blackImage : whiteImage;
-                        imageView.setImage(image);
-                    }
+                    imageView.setImage(getImageByPieceColour(position.getPiece()));
                 }
             }
         }
+    }
+
+    private Image getImageByPieceColour(PieceColour pieceColour) {
+        if (pieceColour == null)
+            return null;
+
+        return pieceColour == PieceColour.BLACK ? blackImage : whiteImage;
     }
 
     ImageView getImageViewByPositionId(int positionId) {

@@ -60,8 +60,14 @@ public class PlayerHandGridPane extends GridPane {
     }
 
     void updateView() {
+        // Set all pieces to the initial image.
         initState();
-        for (int row = 0; row < 9 - game.getPlayer(pieceColour).getPiecesOnHand(); row++) {
+
+        int MAX_PIECES = 9;
+        int playerHand = game.getPlayer(pieceColour).getPiecesOnHand();
+
+        // Remove pieces from the view based on the player's hand.
+        for (int row = 0; row < MAX_PIECES - playerHand; row++) {
             ImageView imageView = (ImageView) getChildren().get(row);
             imageView.setImage(null);
         }
