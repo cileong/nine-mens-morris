@@ -6,20 +6,44 @@ import edu.monash.game.player.Player;
 
 import java.util.Stack;
 
+/**
+ * The game class.
+ */
 public class Game {
 
+    /**
+     * The game board.
+     */
     private Board board;
+    /**
+     * The players.
+     */
     private Player player1, player2, currentPlayer;
+    /**
+     * The moves played.
+     */
     private Stack<Move> movesPlayed;
 
     public Game() {
         initializeNewGame();
     }
 
+    /**
+     * Gets the current board state.
+     *
+     * @return The board.
+     */
     public Board getBoard() {
         return board;
     }
 
+
+    /**
+     * Execute the action on the game.
+     *
+     * @param action The action to execute.
+     * @return True if the action was executed, false otherwise.
+     */
     public boolean execute(Action action) {
         if (action.isValid(this, currentPlayer)) {
             action.executeOn(this);
@@ -29,15 +53,28 @@ public class Game {
         return false;
     }
 
+    /**
+     * Store the move into a stack of moves played.
+     *
+     * @param move The move to store.
+     */
     public void storePlayedMove(Move move) {
         if (move != null)
             movesPlayed.push(move);
     }
 
+    /**
+     * Gets the stack of played move.
+     *
+     * @return The stack of played move.
+     */
     public Stack<Move> getPlayedMove() {
         return movesPlayed;
     }
 
+    /**
+     * Resets the game state to a new game's state.
+     */
     public void initializeNewGame() {
         board = new Board();
 
@@ -48,6 +85,10 @@ public class Game {
         movesPlayed = new Stack<>();
     }
 
+    /**
+     * Switches the active player.
+     * @param gameState The game state to switch the active player on.
+     */
     public void loadGameState(GameState gameState) {
         // Reset the game.
         initializeNewGame();
@@ -68,11 +109,9 @@ public class Game {
             if (move.from() == null) {
                 player.decrementPiecesOnHand();
                 player.incrementPiecesOnBoard();
-                System.out.println("FROM NULL: " + player.getPieceColour().toString() + " " + player.getPiecesOnHand() + " " + player.getPiecesOnBoard());
             }
             if (move.to() == null) {
                 getOpponent(move.pieceColour()).decrementPiecesOnBoard();
-                System.out.println("TO NULL: " + player.getPieceColour().toString() + " " + player.getPiecesOnHand() + " " + player.getPiecesOnBoard());
             }
 
             // Perform phase transitioning.
@@ -96,31 +135,53 @@ public class Game {
         }
 
         movesPlayed = moves;
-
-        System.out.println(getPlayer().getPieceColour().toString() + " " + getPlayer().getPiecesOnHand() + " " + getPlayer().getPiecesOnBoard() + " " + getPlayer().getPhase());
-        System.out.println(getOpponent().getPieceColour().toString() + " " + getOpponent().getPiecesOnHand() + " " + getOpponent().getPiecesOnBoard() + " " + getOpponent().getPhase());
     }
 
+    /**
+     * Gets the active player.
+     * @return The active player.
+     */
     public Player getPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * Gets the player of the given piece colour.
+     * @param colour The piece colour of the player.
+     * @return The player of the given piece colour.
+     */
     public Player getPlayer(PieceColour colour) {
         return player1.getPieceColour() == colour ? player1 : player2;
     }
 
+    /**
+     * Gets the opponent of the active player.
+     * @return The opponent of the active player.
+     */
     public Player getOpponent() {
         return currentPlayer.equals(player1) ? player2 : player1;
     }
 
+    /**
+     * Gets the opponent of the given piece colour.
+     * @param colour The colour of the player.
+     * @return The opponent of the given piece colour.
+     */
     private Player getOpponent(PieceColour colour) {
         return player1.getPieceColour() == colour ? player2 : player1;
     }
 
+    /**
+     * Switches the active player.
+     */
     public void switchActivePlayer() {
         currentPlayer = currentPlayer.equals(player1) ? player2 : player1;
     }
 
+    /**
+     * Gets the stack of moves played.
+     * @return The stack of moves played.
+     */
     public Stack<Move> getMoves() {
         return movesPlayed;
     }

@@ -4,6 +4,9 @@ import edu.monash.game.Board;
 import edu.monash.game.Move;
 import edu.monash.game.Position;
 
+/**
+ * A phase in which a player slides a piece.
+ */
 public class SlidePhase implements PlayerPhase {
 
     private final Player player;
@@ -12,6 +15,13 @@ public class SlidePhase implements PlayerPhase {
         this.player = player;
     }
 
+    /**
+     * Checks whether the move is valid in this phase.
+     *
+     * @param board The board.
+     * @param move  The move.
+     * @return True if the move is valid, false otherwise.
+     */
     @Override
     public boolean validate(Board board, Move move) {
         Position source = board.getPosition(move.from()),
@@ -20,6 +30,9 @@ public class SlidePhase implements PlayerPhase {
         return source != null && source.isNeighbourTo(destination);
     }
 
+    /**
+     * Transitions to the next phase or return to the previous phase.
+     */
     @Override
     public void transition() {
         if (player.getPiecesOnBoard() == 3)
