@@ -11,6 +11,10 @@ import java.io.IOException;
  */
 public class JsonDeserializer implements Deserializer {
 
+    /**
+     * Gets the file extension that this deserializer supports.
+     * @return The file extension.
+     */
     @Override
     public String getSupportedFileExtension() {
         return "json";
@@ -24,12 +28,10 @@ public class JsonDeserializer implements Deserializer {
      */
     @Override
     public GameState deserialize(String filepath) {
-        // Create an object mapper.
         ObjectMapper objectMapper = new ObjectMapper();
-        // Create a game state object.
         GameState gameState = null;
 
-        // Retrieve the file and deserialize it.
+        // Deserializes the file and bind the data to the game state object.
         try {
             File file = new File(filepath);
             gameState = objectMapper.readValue(file, GameState.class);

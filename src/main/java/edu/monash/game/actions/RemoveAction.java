@@ -35,12 +35,11 @@ public class RemoveAction implements Action {
      */
     @Override
     public boolean isValid(Game game, Player player) {
-        // Check whether the player has formed a mill.
+        // If the player has not formed a mill,
+        // they cannot remove their opponent's piece.
         if (!player.hasFormedMill())
-            // The player has not formed a mill, so they cannot remove a piece.
             return false;
 
-        // Check whether the player can perform the move.
         Board board = game.getBoard();
         Position source = board.getPosition(move.from());
         return source.canPieceBeRemoved(player);
@@ -53,9 +52,8 @@ public class RemoveAction implements Action {
      */
     @Override
     public void executeOn(Game game) {
-        // Execute the move on the board.
+        // Execute the move on the board and track it.
         move.executeOn(game.getBoard());
-        // Store the move in the game.
         game.storePlayedMove(move);
 
         // Decrement the number of pieces of the opponent on the board.
@@ -65,12 +63,12 @@ public class RemoveAction implements Action {
         game.getPlayer().attemptTransitionPhase();
         game.getOpponent().attemptTransitionPhase();
 
-        // Reset the player's mill status.
+        // Reset the player's mill status as they cannot form a
+        // mill while removing their opponent's pieces.
         game.getPlayer().setHasFormedMill(false);
 
-        // Switch the active player.
+        // Pass the control to the opponent.
         game.switchActivePlayer();
-
     }
 
 }

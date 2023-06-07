@@ -9,7 +9,15 @@ import java.util.Stack;
  * A class representing the state of a game.
  */
 public class GameState {
+
+    /**
+     * The captured state of the board.
+     */
     private Board board;
+
+    /**
+     * The stack of moves played.
+     */
     private Stack<Move> moves;
 
     /**

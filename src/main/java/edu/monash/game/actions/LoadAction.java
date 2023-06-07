@@ -6,13 +6,25 @@ import edu.monash.game.io.Deserializer;
 import edu.monash.game.player.Player;
 
 /**
- * An action that loads a game state.
+ * An action that loads a game state from a specified filepath.
  */
 public class LoadAction implements Action {
 
+    /**
+     * The deserializer used to load the game state.
+     */
     private final Deserializer deserializer;
+
+    /**
+     * The filepath of the saved game state.
+     */
     private final String filepath;
 
+    /**
+     * Creates a new load action.
+     * @param deserializer The deserializer used to load the game state.
+     * @param filepath The filepath of the saved game state.
+     */
     public LoadAction(Deserializer deserializer, String filepath) {
         this.deserializer = deserializer;
         this.filepath = filepath;

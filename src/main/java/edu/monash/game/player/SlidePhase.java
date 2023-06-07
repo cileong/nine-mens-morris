@@ -9,8 +9,15 @@ import edu.monash.game.Position;
  */
 public class SlidePhase implements PlayerPhase {
 
+    /**
+     * The player of which this phase belongs to.
+     */
     private final Player player;
 
+    /**
+     * Constructs a new slide phase.
+     * @param player The player.
+     */
     public SlidePhase(Player player) {
         this.player = player;
     }
@@ -26,7 +33,6 @@ public class SlidePhase implements PlayerPhase {
     public boolean validate(Board board, Move move) {
         Position source = board.getPosition(move.from()),
                 destination = board.getPosition(move.to());
-
         return source != null && source.isNeighbourTo(destination);
     }
 

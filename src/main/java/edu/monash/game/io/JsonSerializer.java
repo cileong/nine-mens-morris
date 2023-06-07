@@ -13,6 +13,10 @@ import java.io.IOException;
  */
 public class JsonSerializer implements Serializer {
 
+    /**
+     * Gets the file extension that this serializer supports.
+     * @return The file extension.
+     */
     @Override
     public String getSupportedFileExtension() {
         return "json";
@@ -20,18 +24,16 @@ public class JsonSerializer implements Serializer {
 
     /**
      * Serializes a game state to a JSON file.
-     *
      * @param filepath The path to the file.
      */
     @Override
     public void serialize(Game game, String filepath) {
         GameState gameState = new GameState(game.getBoard(), game.getMoves());
 
-        // Create an object mapper.
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        // Serialize the game state to a file.
+        // Serialize the game state and write to a file.
         try {
             File file = new File(filepath);
             objectMapper.writeValue(file, gameState);

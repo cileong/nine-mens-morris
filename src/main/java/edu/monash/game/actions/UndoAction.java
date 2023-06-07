@@ -8,24 +8,33 @@ import edu.monash.game.player.Player;
  * An action that undoes the last move.
  */
 public class UndoAction implements Action {
+
     /**
      * The move that is being undone.
      */
     private final Move move;
+
     /**
      * The position from which the piece is being moved.
      */
     private Integer from;
+
     /**
      * The position to which the piece is being moved.
      */
     private Integer to;
 
+    /**
+     * Constructs a new undo action.
+     * @param game The game where the undo is being performed.
+     */
     public UndoAction(Game game) {
-        // Pop the last move from the stack.
+        // Pop the previous move from the stack.
         Move lastMove = game.getPlayedMove().pop();
-        //switch the active player back to the previous player.
+
+        // Switch the active player back to the previous player.
         game.switchActivePlayer();
+
         // Set the from and to positions oppositely.
         this.from = lastMove.to();
         this.to = lastMove.from();
@@ -53,26 +62,25 @@ public class UndoAction implements Action {
     public void executeOn(Game game) {
         move.executeOn(game.getBoard());
 
-        // Check whether a mill has formed before undoing.
+        // If a mill has formed, then the current player should be the opponent.
+        // If they have set a mill, it is now gone.
         if (game.getOpponent().hasFormedMill()) {
-            // If a mill has formed, switch the opponent back as the current player.
             game.switchActivePlayer();
-            // Set the current's player mill status to false
-            // after undoing the move that formed a mill.
             game.getPlayer().setHasFormedMill(false);
         }
 
-        // Check whether the previous move is a remove action.
-        if (move.from() ==  null) {
-            // If the previous move is a remove action,
-            // increment the opponent's pieces on board.
+        // If a piece is being moved back to the board...
+        if (move.from() == null) {
             game.getOpponent().incrementPiecesOnBoard();
-            // Set the current player's mill status to true
-            // In order to let the current player remove a piece again after undoing.
+
+            // Allow the player to remove a piece from the board again after undoing.
             game.getPlayer().setHasFormedMill(true);
-            // Set the previous removed piece back to the board.
+
             game.getBoard().getPosition(move.to()).setPiece(game.getOpponent().getPieceColour());
-        } else if (move.to() ==  null) {
+        }
+
+        // If a piece is being moved back to the hand...
+        if (move.to() == null) {
             game.getPlayer().decrementPiecesOnBoard();
             game.getPlayer().incrementPiecesOnHand();
         }

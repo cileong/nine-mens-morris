@@ -5,7 +5,6 @@ package edu.monash.game;
  */
 public enum PieceColour {
 
-    // The colours of the pieces indicating two different players.
     BLACK,
     WHITE
 

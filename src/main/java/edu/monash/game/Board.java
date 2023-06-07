@@ -31,6 +31,9 @@ public class Board {
     private final List<Position> positions;
 
 
+    /**
+     * Creates a board.
+     */
     public Board() {
         positions = createBoardStructure();
     }

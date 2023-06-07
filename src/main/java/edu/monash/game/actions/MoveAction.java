@@ -65,8 +65,7 @@ public class MoveAction implements Action {
         Position destination = board.getPosition(move.to());
 
         // If the player has formed a mill, set the flag to true.
-        if (destination.isInVerticalMill() || destination.isInHorizontalMill())
-            game.getPlayer().setHasFormedMill(true);
+        game.getPlayer().setHasFormedMill(destination.isInMill());
 
         // Attempt to transition the player to the next PlayerPhase.
         game.getPlayer().attemptTransitionPhase();

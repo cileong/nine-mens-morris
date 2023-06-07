@@ -10,6 +10,7 @@ import edu.monash.game.player.Player;
  * An action that places a piece on the board.
  */
 public class PlaceAction implements Action {
+
     /**
      * The move to be executed.
      */
@@ -60,9 +61,7 @@ public class PlaceAction implements Action {
         Position destination = board.getPosition(move.to());
 
         // If the player has formed a mill, set the flag to true.
-        if (destination.isInVerticalMill() || destination.isInHorizontalMill()) {
-            game.getPlayer().setHasFormedMill(true);
-        }
+        game.getPlayer().setHasFormedMill(destination.isInMill());
 
         // Update the number of pieces on hand and on board.
         game.getPlayer().decrementPiecesOnHand();

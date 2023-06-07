@@ -9,13 +9,36 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 
+/**
+ * A grid pane representing a player's hand.
+ */
 public class PlayerHandGridPane extends GridPane {
 
+    /**
+     * The game model.
+     */
     private Game game;
+
+    /**
+     * The colour of the pieces in the hand.
+     */
     private PieceColour pieceColour;
+
+    /**
+     * The image to use for black pieces.
+     */
     private Image blackImage;
+
+    /**
+     * The image to use for white pieces.
+     */
     private Image whiteImage;
 
+    /**
+     * Initialize the player hand grid pane.
+     * @param game The game model.
+     * @param pieceColour The colour of the pieces in the hand.
+     */
     void initialize(Game game, PieceColour pieceColour) {
         this.game = game;
         this.pieceColour = pieceColour;
@@ -30,6 +53,9 @@ public class PlayerHandGridPane extends GridPane {
         whiteImage = new Image("/edu/monash/images/piece-white.png");
     }
 
+    /**
+     * Initialize the initial state of the player's hand.
+     */
     void initState() {
         // Set all ImageView instances to the initial image
         for (int row = 0; row < getRowCount(); row++) {
@@ -41,6 +67,9 @@ public class PlayerHandGridPane extends GridPane {
         }
     }
 
+    /**
+     * Undo the last move made by the player.
+     */
     void undo() {
         boolean isUndo = false;
         int row = getRowCount() - 1;
@@ -57,6 +86,9 @@ public class PlayerHandGridPane extends GridPane {
         }
     }
 
+    /**
+     * Refresh the view.
+     */
     void updateView() {
         // Set all pieces to the initial image.
         initState();
@@ -71,20 +103,38 @@ public class PlayerHandGridPane extends GridPane {
         }
     }
 
+    /**
+     * A drag event handler for the image views in player hand grid pane.
+     */
     private class MouseEventHandler implements EventHandler<MouseEvent> {
 
+        /**
+         * The image view that the event handler is attached to.
+         */
         private final ImageView imageView;
 
+        /**
+         * Initialize the mouse event handler.
+         * @param imageView The image view that the event handler is attached to.
+         */
         MouseEventHandler(ImageView imageView) {
             this.imageView = imageView;
         }
 
+        /**
+         * Handle the mouse event.
+         * @param event The mouse event occurred.
+         */
         @Override
         public void handle(MouseEvent event) {
             if (event.getEventType() == MouseEvent.DRAG_DETECTED)
                 onDragDetectedHandler(event);
         }
 
+        /**
+         * A drag detected event handler for the player hand grid pane.
+         * @param event The event.
+         */
         private void onDragDetectedHandler(MouseEvent event) {
             if (imageView.getImage() == null || game.getPlayer().getPieceColour() != pieceColour)
                 return;
@@ -99,14 +149,26 @@ public class PlayerHandGridPane extends GridPane {
 
     }
 
+    /**
+     * A drag event handler for the image views in player hand grid pane.
+     * @param imageView The image view that the event handler is attached to.
+     */
     private record DragEventHandler(ImageView imageView) implements EventHandler<DragEvent> {
 
+        /**
+         * Handle the drag event.
+         * @param event The drag event which occurred.
+         */
         @Override
         public void handle(DragEvent event) {
             if (event.getEventType() == DragEvent.DRAG_DONE)
                 onDragDoneHandler(event);
         }
 
+        /**
+         * A drag done event handler for the image view.
+         * @param event The event.
+         */
         private void onDragDoneHandler(DragEvent event) {
             if (event.getTransferMode() != TransferMode.MOVE)
                 return;

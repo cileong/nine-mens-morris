@@ -2,6 +2,7 @@ package edu.monash.game.player;
 
 import edu.monash.game.Board;
 import edu.monash.game.Move;
+
 /**
  * An interface for player phases.
  */

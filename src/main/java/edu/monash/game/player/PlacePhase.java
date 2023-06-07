@@ -9,8 +9,16 @@ import edu.monash.game.Position;
  */
 public class PlacePhase implements PlayerPhase {
 
+    /**
+     * The player of which this phase belongs to.
+     */
     private final Player player;
 
+    /**
+     * Constructs a new place phase.
+     *
+     * @param player The player.
+     */
     public PlacePhase(Player player) {
         this.player = player;
     }

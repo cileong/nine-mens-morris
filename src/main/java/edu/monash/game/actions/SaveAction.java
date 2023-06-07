@@ -9,9 +9,21 @@ import edu.monash.game.player.Player;
  */
 public class SaveAction implements Action {
 
+    /**
+     * The serializer used to save the game state.
+     */
     private final Serializer serializer;
+
+    /**
+     * The filepath where the game state should be saved to.
+     */
     private final String filepath;
 
+    /**
+     * Creates a new save action.
+     * @param serializer The serializer used to save the game state.
+     * @param filepath The filepath where the game state should be saved to.
+     */
     public SaveAction(Serializer serializer, String filepath) {
         this.serializer = serializer;
         this.filepath = filepath;
@@ -26,11 +38,12 @@ public class SaveAction implements Action {
      */
     @Override
     public boolean isValid(Game game, Player player) {
+        // The game can be saved at any point of time by any player.
         return true;
     }
 
     /**
-     * Executes the save action on the game.
+     * Executes the save action.
      *
      * @param game The game object.
      */

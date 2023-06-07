@@ -7,7 +7,7 @@ import edu.monash.game.player.Player;
 import java.util.Stack;
 
 /**
- * The game class.
+ * A class representing the game model.
  */
 public class Game {
 
@@ -15,15 +15,20 @@ public class Game {
      * The game board.
      */
     private Board board;
+
     /**
      * The players.
      */
     private Player player1, player2, currentPlayer;
+
     /**
      * The moves played.
      */
     private Stack<Move> movesPlayed;
 
+    /**
+     * Initializes a new game.
+     */
     public Game() {
         initializeNewGame();
     }
@@ -86,8 +91,8 @@ public class Game {
     }
 
     /**
-     * Switches the active player.
-     * @param gameState The game state to switch the active player on.
+     * Loads the game from a game state.
+     * @param gameState The game state to load from.
      */
     public void loadGameState(GameState gameState) {
         // Reset the game.
@@ -99,7 +104,7 @@ public class Game {
         if (movesPlayed.size() == 0)
             return;
 
-        // Fast-forward the game to the last move.
+        // Compute the state of the players.
         for (Move move : movesPlayed.toArray(new Move[0])) {
             Player player = getPlayer(move.pieceColour());
 
@@ -116,6 +121,7 @@ public class Game {
             getOpponent().attemptTransitionPhase();
         }
 
+        // Find out who is the active player.
         Move lastMove = movesPlayed.peek();
         Player player = getPlayer(lastMove.pieceColour());
 

@@ -15,19 +15,47 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+ * The controller for the main view.
+ */
 public class ViewController {
 
+    /**
+     * The view representing the game board.
+     */
     @FXML
     private GameBoardGridPane boardGrid;
+
+    /**
+     * The views representing the black player's hand.
+     */
     @FXML
     private PlayerHandGridPane blackGrid;
+
+    /**
+     * The views representing the white player's hand.
+     */
     @FXML
     private PlayerHandGridPane whiteGrid;
+
+    /**
+     * The game model.
+     */
     private Game game;
 
+    /**
+     * The serializer factory used to serialize the game to files.
+     */
     private SerializerFactory serializerFactory;
+
+    /**
+     * The deserializer factory used to deserialize the game from files.
+     */
     private DeserializerFactory deserializerFactory;
 
+    /**
+     * Initialize the view controller.
+     */
     @FXML
     private void initialize() {
         game = new Game();
@@ -43,13 +71,19 @@ public class ViewController {
         deserializerFactory.registerDeserializer(new JsonDeserializer());
     }
 
-    public void resetView(){
+    /**
+     * Resets the view to initial state.
+     */
+    public void resetView() {
         blackGrid.initState();
         whiteGrid.initState();
         boardGrid.initState();
         initialize();
     }
 
+    /**
+     * In the case where a player has won, display the game end dialog.
+     */
     public void showGameWonDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game won");
@@ -65,6 +99,9 @@ public class ViewController {
         }
     }
 
+    /**
+     * In the case where the game ends in a draw, display the game end dialog.
+     */
     public void showDrawDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Draw");
@@ -76,6 +113,12 @@ public class ViewController {
         }
     }
 
+    /**
+     * Prompt the user for input with a dialog.
+     * @param title The title of the dialog.
+     * @param header The header of the dialog.
+     * @param contentText The content text of the dialog.
+     */
     private void promptDialog(String title, String header, String contentText) {
         ButtonType btnYes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType btnNo = new ButtonType("No", ButtonBar.ButtonData.NO);
@@ -87,13 +130,16 @@ public class ViewController {
         alert.getButtonTypes().addAll(btnYes, btnNo);
         alert.showAndWait();
         if (alert.getResult() == btnYes) {
-                resetView();
+            resetView();
         }
         else if (alert.getResult() == btnNo) {
-                Platform.exit();
+            Platform.exit();
         }
     }
 
+    /**
+     * The handler called when the user clicks on the "Load" menu item.
+     */
     public void loadAction() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Load game...");
@@ -110,6 +156,9 @@ public class ViewController {
         }
     }
 
+    /**
+     * The handler called when the user clicks on the "Save" menu item.
+     */
     public void saveAction() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save game...");
@@ -124,6 +173,9 @@ public class ViewController {
         }
     }
 
+    /**
+     * The handler called when the user clicks on the "Undo" menu item.
+     */
     public void undoAction() {
         boolean isRemoveAction = boardGrid.undo();
 
@@ -136,6 +188,9 @@ public class ViewController {
         }
     }
 
+    /**
+     * The handler called when the user clicks on the "Quit" menu item.
+     */
     public void quitAction() {
         Platform.exit();
     }

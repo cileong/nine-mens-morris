@@ -31,6 +31,11 @@ public class Player {
      */
     private PlayerPhase phase;
 
+    /**
+     * Creates a new player.
+     * @param pieceColour The colour of the player's pieces.
+     * @param initialPhaseConstructor The constructor of the initial phase.
+     */
     public Player(PieceColour pieceColour, Function<Player, PlayerPhase> initialPhaseConstructor) {
         this.pieceColour = pieceColour;
         this.piecesOnHand = 9;

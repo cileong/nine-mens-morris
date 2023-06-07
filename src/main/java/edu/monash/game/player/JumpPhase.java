@@ -3,13 +3,21 @@ package edu.monash.game.player;
 import edu.monash.game.Board;
 import edu.monash.game.Move;
 import edu.monash.game.Position;
+
 /**
  A phase in which a player can jump a piece to any position on the board.
  */
 class JumpPhase implements PlayerPhase {
 
+    /**
+     * The player of which this phase belongs to.
+     */
     private final Player player;
 
+    /**
+     * Constructs a new jump phase.
+     * @param player The player.
+     */
     public JumpPhase(Player player) {
         this.player = player;
     }

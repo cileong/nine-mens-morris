@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.monash.game.player.Player;
 
+/**
+ * A position on the board.
+ */
 public class Position {
 
     /**
@@ -22,10 +25,19 @@ public class Position {
      */
     private PieceColour occupiedBy;
 
+    /**
+     * Creates a position.
+     * @param id The ID of the position.
+     */
     public Position(int id) {
         this.id = id;
     }
 
+    /**
+     * Creates a position.
+     * @param id The ID of the position.
+     * @param occupiedBy The piece on the position.
+     */
     @JsonCreator
     public Position(@JsonProperty("id") int id,
                     @JsonProperty("piece") PieceColour occupiedBy) {
