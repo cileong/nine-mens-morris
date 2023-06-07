@@ -7,17 +7,15 @@ import edu.monash.game.GameState;
 
 import java.io.File;
 import java.io.IOException;
+
 /**
  * A serializer for JSON files.
  */
 public class JsonSerializer implements Serializer {
-    /**
-     * The game state to serialize.
-     */
-    private final GameState gameState;
 
-    public JsonSerializer(Game game) {
-        this.gameState = new GameState(game.getBoard(), game.getMoves());
+    @Override
+    public String getSupportedFileExtension() {
+        return "json";
     }
 
     /**
@@ -25,7 +23,10 @@ public class JsonSerializer implements Serializer {
      *
      * @param filepath The path to the file.
      */
-    public void serialize(String filepath) {
+    @Override
+    public void serialize(Game game, String filepath) {
+        GameState gameState = new GameState(game.getBoard(), game.getMoves());
+
         // Create an object mapper.
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);

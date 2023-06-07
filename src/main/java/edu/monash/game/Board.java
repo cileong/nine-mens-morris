@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -112,6 +113,10 @@ public class Board {
                 .filter(position -> position.getId() == id)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<Position> getPositions() {
+        return Collections.unmodifiableList(positions);
     }
 
     /**

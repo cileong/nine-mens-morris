@@ -3,10 +3,7 @@ package edu.monash;
 import edu.monash.game.Game;
 import edu.monash.game.GameState;
 import edu.monash.game.PieceColour;
-import edu.monash.game.io.Deserializer;
-import edu.monash.game.io.JsonDeserializer;
-import edu.monash.game.io.JsonSerializer;
-import edu.monash.game.io.Serializer;
+import edu.monash.game.io.*;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -26,6 +23,8 @@ public class ViewController {
     private PlayerHandGridPane whiteGrid;
     private Game game;
 
+    private SerializerFactory serializerFactory;
+
     @FXML
     private void initialize() {
         game = new Game();
@@ -33,6 +32,9 @@ public class ViewController {
         boardGrid.initialize(game, this);
         blackGrid.initialize(game, PieceColour.BLACK);
         whiteGrid.initialize(game, PieceColour.WHITE);
+
+        serializerFactory = new SerializerFactory();
+        serializerFactory.registerSerializer(new JsonSerializer());
     }
 
     public void resetView(){
@@ -43,11 +45,6 @@ public class ViewController {
     }
 
     public void showGameWonDialog() {
-        JsonDeserializer jsonDeserializer = new JsonDeserializer();
-        GameState gameState = jsonDeserializer.deserialize("game.json");
-        System.out.println(gameState.getBoard());
-        System.out.println(gameState.getMoves());
-
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game won");
         alert.setHeaderText(null);
@@ -63,11 +60,6 @@ public class ViewController {
     }
 
     public void showDrawDialog() {
-        JsonDeserializer jsonDeserializer = new JsonDeserializer();
-        GameState gameState = jsonDeserializer.deserialize("game.json");
-        System.out.println(gameState.getBoard());
-        System.out.println(gameState.getMoves());
-
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Draw");
         alert.setHeaderText(null);
@@ -122,8 +114,8 @@ public class ViewController {
         File file = fileChooser.showSaveDialog(new Stage());
 
         if (file != null) {
-            Serializer jsonSerializer = new JsonSerializer(game);
-            jsonSerializer.serialize(file.getPath());
+            Serializer jsonSerializer = new JsonSerializer();
+            jsonSerializer.serialize(game, file.getPath());
         }
     }
 
